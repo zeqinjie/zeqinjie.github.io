@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>OC和Swift混编经验 | zhengzeqin&#39;s blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Swift简介 Swift，苹果于2014年WWDC（苹果开发者大会）发布的新开发语言，可与Objective-C*共同运行于Mac OS和iOS平台，用于搭建基于苹果平台的应用程序。2015年12月4日，苹果公司宣布其Swift编程语言现在开放源代码。掘金地址  Swift 优势简洁代码  Swift所有的变量定义使用var ,常量定义使用let。 数组或字符串可以使用”+”符号直接相加。 可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OC和Swift混编经验">
+<meta property="og:url" content="https://vigilant-lovelace-ee6cb4.netlify.app/2018/09/10/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/index.html">
+<meta property="og:site_name" content="zhengzeqin&#39;s blogs">
+<meta property="og:description" content="Swift简介 Swift，苹果于2014年WWDC（苹果开发者大会）发布的新开发语言，可与Objective-C*共同运行于Mac OS和iOS平台，用于搭建基于苹果平台的应用程序。2015年12月4日，苹果公司宣布其Swift编程语言现在开放源代码。掘金地址  Swift 优势简洁代码  Swift所有的变量定义使用var ,常量定义使用let。 数组或字符串可以使用”+”符号直接相加。 可以">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2018/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/1.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2018/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/2.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2018/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/3.png">
+<meta property="article:published_time" content="2018-09-10T11:03:02.000Z">
+<meta property="article:modified_time" content="2020-07-29T01:55:46.504Z">
+<meta property="article:author" content="zhengzeqin">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zeqinjie.github.io/images/2018/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="zhengzeqin&#39;s blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">zhengzeqin&#39;s blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Lightly do not say gives up, otherwise sorry oneself</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vigilant-lovelace-ee6cb4.netlify.app"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OC和Swift混编经验" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/10/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/" class="article-date">
+  <time datetime="2018-09-10T11:03:02.000Z" itemprop="datePublished">2018-09-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OC和Swift混编经验
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Swift简介"><a href="#Swift简介" class="headerlink" title="Swift简介"></a>Swift简介</h2><blockquote>
+<p>Swift，苹果于2014年WWDC（苹果开发者大会）发布的新开发语言，可与Objective-C*共同运行于Mac OS和iOS平台，用于搭建基于苹果平台的应用程序。<br>2015年12月4日，苹果公司宣布其Swift编程语言现在开放<a href="https://github.com/apple/swift" target="_blank" rel="noopener">源代码</a>。<br><a href="https://juejin.im/post/5b9650c35188255c8a05dd94" target="_blank" rel="noopener">掘金地址</a></p>
+</blockquote>
+<h2 id="Swift-优势"><a href="#Swift-优势" class="headerlink" title="Swift 优势"></a>Swift 优势</h2><h3 id="简洁代码"><a href="#简洁代码" class="headerlink" title="简洁代码"></a>简洁代码</h3><blockquote>
+<ol>
+<li>Swift所有的变量定义使用var ,常量定义使用let。</li>
+<li>数组或字符串可以使用”+”符号直接相加。</li>
+<li>可以使用高阶函数map，flatMap，reduce，filter简化代码量。</li>
+</ol>
+</blockquote>
+<h3 id="易维护"><a href="#易维护" class="headerlink" title="易维护"></a>易维护</h3><blockquote>
+<ol>
+<li>Swift抛弃了OC头文件（.h）和实现文件（.m）组合成一个代码文件（.swift）。</li>
+<li>因为Swift不是基于C构建的，而OC是在C和Smalltalk下构建。所以在设计上比较新颖，同时我们能看到现代语言（JavaScript，Java，Python，C#，以及 C++ ）的身影特性：泛型，可选类型，类型推断，高阶函数。基于泛型和高阶函数的使用导致更清晰，更可重用的代码，更易于维护。</li>
+</ol>
+</blockquote>
+<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><blockquote>
+<ol>
+<li>在OC中不同类型可以直接相加，默认会隐式转换。但是swift不同类型的是不能直接相加，必须先进行类型转换。</li>
+<li>在其他的编程语言当中，你并不能知道哪个变量可以为空(null)哪个不能，这就强制开发者去考虑可能为空的情况。</li>
+<li>在OC中if判断存在非0即是true的方式，但是在swift中if判断必须为true或者false。</li>
+</ol>
+</blockquote>
+<h3 id="快"><a href="#快" class="headerlink" title="快"></a>快</h3><blockquote>
+<ol>
+<li>OC是一门动态的语言，很多实际执行需要在运行时才可以确定，Swift不一样，Swift将很多在运行时才可以确定的信息，在编译期就决定了。这就让Swift更加快速。<a href="https://onevcat.com/2016/02/swift-performance/" target="_blank" rel="noopener">Swift性能探索和优化分析-王巍</a></li>
+<li>在纯Swift中的函数调用就不是OC的那套runtime了，而是类似C++的vtable，在编译期就决定调用哪个函数。那如果想使用OC的特性需要继承自NSObject。</li>
+</ol>
+</blockquote>
+<h2 id="Swift-与-OC-的混编"><a href="#Swift-与-OC-的混编" class="headerlink" title="Swift 与 OC 的混编"></a>Swift 与 OC 的混编</h2><blockquote>
+<ol>
+<li>当我们在OC项目中添加Swift文件的时候系统会默认帮我创建一个桥接文件。<br>“项目名称-Bridging-Header.h”的文件。</li>
+<li>在Swift中调用OC的类时，只需要在上面桥接头文件import即可</li>
+<li>在OC中调用Swift类，则需在OC文件中import “项目名称-Swift.h” 头文件即可</li>
+</ol>
+</blockquote>
+<h2 id="混合开发的问题"><a href="#混合开发的问题" class="headerlink" title="混合开发的问题"></a>混合开发的问题</h2><blockquote>
+<p>最近有个新闻列表改版需求，那在此下使用Swift去重做这块需求，需求中遇到一些坑和大家分享下。</p>
+</blockquote>
+<ul>
+<li>数模转换的坑<blockquote>
+<p> 在OC项目中常用的MJExtension第三方库。那在swift中我们怎么做呢？<br>当然可以使用目前第三方库SwiftJson或者HandyJSON或者实现Codable协议。不过这里我使用的是系统KVC方式,遇到问题如下</p>
+<ol>
+<li>因为swift的构造函数与OC不一样，当子类中有自己的构造函数时，那么将不继承父类自定义的构造函数。所以子类需重写父类init(dict : [String : Any])这个构造函数否则将无法使用。</li>
+<li>因为使用的是NSObject的KVC特性所以需加@objc定义子类属性。注意在swift4.0之前默认只要继承NSObject就会系统默认添加，但这之后需要手动添加了。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class BaseModel: NSObject &#123;</span><br><span class="line">    override init() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    init(dict : [String : Any]) &#123;</span><br><span class="line">        super.init()</span><br><span class="line">        setValuesForKeys(dict)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;记得重写该方法避免崩溃</span><br><span class="line">    override func setValue(_ value: Any?, forUndefinedKey key: String) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class NewsNavModel: BaseModel &#123;</span><br><span class="line">    &#x2F;&#x2F;type &#x3D; 998 最新,999 收藏</span><br><span class="line">    @objc var type:Int &#x3D; 0</span><br><span class="line">    @objc var type_name:String &#x3D; &quot;&quot;</span><br><span class="line">    </span><br><span class="line">    init(_ type : Int , type_name : String) &#123;</span><br><span class="line">        super.init()</span><br><span class="line">        self.type &#x3D; type</span><br><span class="line">        self.type_name &#x3D; type_name</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;需重写父类方法</span><br><span class="line">    override init!(dic: [String : Any]!) &#123;</span><br><span class="line">        super.init(dic: dic)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>关于@objc坑</p>
+<blockquote>
+<ol>
+<li>在swift3使用#selector指定的方法，只有当方法权限为private时需要加@objc修饰符，现在Swift4.0全都要加@objc修饰符</li>
+<li>定义的方法，枚举，协议或者是属性如果需要被OC调用则需添加@objc</li>
+<li>自定义的protocol协议中,有optional修饰的非必须实现的方法,需要用@objc修饰</li>
+</ol>
+</blockquote>
+</li>
+<li><p>被废弃的方法:</p>
+<blockquote>
+<p>initialize/dispatch_once方法已经被Swift4.0废弃所以后续不能再使用</p>
+</blockquote>
+</li>
+<li><p>NSClassFromString方法的坑</p>
+<blockquote>
+<p>在OC的时候直接使用类名即可转换为对于Class，但是Swift中有命名空间存在所以使用这个方法需要添加项目的名称</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;OC 中</span><br><span class="line">Class ocClass &#x3D; NSClassFromString(@&quot;MyFavModel&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;Swift中</span><br><span class="line">let swiftClass &#x3D; NSClassFromString(&quot;项目名称.MyFavModel&quot;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>fatalError</p>
+<blockquote>
+<p>在Swift 中继承了遵守NSCoding protocol的类时，并自定义构造函数时候则需加入required init(coder aDecoder: NSCoder)。这个是在OC中则不存在的。<br>其作用是表明子类不能通过被fatalError定义的函数做初始化</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) &#123;</span><br><span class="line">    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)</span><br><span class="line">    self.hidesBottomBarWhenPushed &#x3D; true</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">required init(coder aDecoder: NSCoder) &#123;</span><br><span class="line">    fatalError(&quot;init(coder:) has not been implemented&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>OC的类不能继承至Swift的类，但是Swift类可以继承至OC的类。</p>
+<blockquote>
+<p>补充：即使Swift的父类是OC也不能让OC类继承该Swift类</p>
+</blockquote>
+</li>
+<li><p>Swift中没有宏，只能使用全局常量或者全局函数替代。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; 当前app信息</span><br><span class="line">let AppInfo &#x3D; Bundle.main.infoDictionary</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&#x2F; 当前app版本号</span><br><span class="line">let AppCurrentVersion &#x3D; Bundle.main.object(forInfoDictionaryKey: &quot;CFBundleShortVersionString&quot;) as! String</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&#x2F; 日志打印</span><br><span class="line">func DLog(str: String) &#123;</span><br><span class="line">    #if DEBUG</span><br><span class="line">    print(&quot;file: \(#file), line:\(#line),\(str)&quot;)</span><br><span class="line">    #endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Swift不像OC那样能直接调用C++,需通过OC或者C去调用C++。</p>
+</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Swift版本升级"><a href="#Swift版本升级" class="headerlink" title="Swift版本升级"></a>Swift版本升级</h3><blockquote>
+<p>例如:Swift3.0 -&gt; Swift4.0</p>
+<ol>
+<li>选中要转换的 target</li>
+<li>Edit -&gt; Convert -&gt; To Current Swift Syntax </li>
+<li>勾选需要转换的 target （pod 引用不用勾选），Next </li>
+<li>选择转换选项，Next </li>
+</ol>
+</blockquote>
+<p><img src="https://zeqinjie.github.io/images/2018/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/1.png" alt=""></p>
+<h3 id="快速的将OC语言转换成Swift语言"><a href="#快速的将OC语言转换成Swift语言" class="headerlink" title="快速的将OC语言转换成Swift语言"></a>快速的将OC语言转换成Swift语言</h3><blockquote>
+<p>这里推荐一款swiftify插件。支持在线转换，或者添加插件到Xcode中。</p>
+<ol>
+<li><a href="https://itunes.apple.com/cn/app/swiftify-objective-c-converter-for-xcode/id1183412116?mt=12" target="_blank" rel="noopener">插件安装AppStore下载地址</a></li>
+<li><a href="https://objectivec2swift.com/#/home" target="_blank" rel="noopener">在线转换地址</a></li>
+</ol>
+</blockquote>
+<p><img src="https://zeqinjie.github.io/images/2018/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/2.png" alt=""></p>
+<h3 id="快速将json转化为Swift的模型对象"><a href="#快速将json转化为Swift的模型对象" class="headerlink" title="快速将json转化为Swift的模型对象"></a>快速将json转化为Swift的模型对象</h3><blockquote>
+<p>基于Codable协议快速的数模序列化</p>
+<ol>
+<li>它不仅支持Swift,还支持其他语言比如Kotlin,Java,C#,Ruby,Object-c,Python</li>
+<li><a href="https://app.quicktype.io/" target="_blank" rel="noopener">在线链接</a></li>
+</ol>
+</blockquote>
+<p><img src="https://zeqinjie.github.io/images/2018/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/3.png" alt=""></p>
+<h3 id="通过R-swift快速生成资源代码"><a href="#通过R-swift快速生成资源代码" class="headerlink" title="通过R.swift快速生成资源代码"></a>通过R.swift快速生成资源代码</h3><p>根据项目内容来自动化生 ImageName 和 SegueName代码 可以使用Switf的自动化工具了，<a href="https://github.com/mac-cain13/R.swift" target="_blank" rel="noopener">R.swift</a> 和 <a href="https://github.com/SwiftGen/SwiftGen" target="_blank" rel="noopener">SwiftGen</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let image &#x3D; UIImage(imageName: .imgIcon)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Swift-测试速度"><a href="#Swift-测试速度" class="headerlink" title="Swift 测试速度"></a>Swift 测试速度</h3><ul>
+<li><a href="https://www.jessesquires.com/blog/apples-to-apples-part-two/" target="_blank" rel="noopener">Swift 与 Object-C的速度测试对比</a></li>
+<li><a href="https://www.jessesquires.com/blog/apples-to-apples-part-three/" target="_blank" rel="noopener">Swift 与 C的速度测试对比</a></li>
+</ul>
+<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><blockquote>
+<p>Swift学习文档：</p>
+<ol>
+<li><a href="https://link.jianshu.com/?t=https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID309" target="_blank" rel="noopener">The Swift Programming Language (Swift 4)</a></li>
+<li><a href="https://github.com/apple/swift-evolution/tree/master/proposals" target="_blank" rel="noopener">Swift的180个介绍</a></li>
+</ol>
+</blockquote>
+<blockquote>
+<p>Swift 书籍 </p>
+<ol>
+<li><a href="http://swifter.tips/buy" target="_blank" rel="noopener">Swifter - Swift 必备 tips</a></li>
+<li><a href="https://www.objccn.io/products/advanced-swift/" target="_blank" rel="noopener">Swift 进阶</a></li>
+</ol>
+</blockquote>
+<blockquote>
+<p>参考地址</p>
+<ol>
+<li><a href="https://www.cnblogs.com/baitongtong/p/7250940.html" target="_blank" rel="noopener">Swift4.0新特性</a></li>
+</ol>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vigilant-lovelace-ee6cb4.netlify.app/2018/09/10/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/" data-id="ckd6pwrk00008zssd1whvfovz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/21/%E5%85%AC%E5%8F%B8%E5%A4%BA%E6%97%97%E6%AF%94%E8%B5%9B-iOS%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          公司夺旗比赛-iOS题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/07/04/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS怎么推送统计到达率</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/addcn/" rel="tag">addcn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/addcn/" style="font-size: 10px;">addcn</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/01/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">iOS开发老司机的神兵利器-效率工具</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/13/ios13%E8%8B%B9%E6%9E%9C%E5%AF%B9UIWebView%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81/">ios13苹果对UIWebView不再支持</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/28/Jenkins-fastlane%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA/">Jenkins-fastlane自动构建</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/23/MVVM%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8A%BF%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">MVVM架构优势及应用场景</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/">基于Jenkins-Gitlab-蒲公英-附上shell脚本</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 zhengzeqin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

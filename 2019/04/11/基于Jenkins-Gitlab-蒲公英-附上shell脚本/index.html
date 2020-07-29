@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>基于Jenkins-Gitlab-蒲公英-附上shell脚本 | zhengzeqin&#39;s blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Jenkins 持续集成自动化打包分发 基于Jenkins + Gitlab + 蒲公英  部署流程安装Jenkins 安装Java环境，目前jenkins只支持jdk8 下载地址  安装完使用命令 java -version检查当前版本 java选择如图       安装 Jenkins   先确保已安装Homebrew   命令安装 brew install jenkins  设置开机自启动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Jenkins-Gitlab-蒲公英-附上shell脚本">
+<meta property="og:url" content="https://vigilant-lovelace-ee6cb4.netlify.app/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/index.html">
+<meta property="og:site_name" content="zhengzeqin&#39;s blogs">
+<meta property="og:description" content="Jenkins 持续集成自动化打包分发 基于Jenkins + Gitlab + 蒲公英  部署流程安装Jenkins 安装Java环境，目前jenkins只支持jdk8 下载地址  安装完使用命令 java -version检查当前版本 java选择如图       安装 Jenkins   先确保已安装Homebrew   命令安装 brew install jenkins  设置开机自启动">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/1.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/2.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/3.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/4.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/5.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/6.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/7.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/8.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/9.png">
+<meta property="article:published_time" content="2019-04-11T11:03:00.000Z">
+<meta property="article:modified_time" content="2020-07-29T01:55:46.508Z">
+<meta property="article:author" content="zhengzeqin">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="zhengzeqin&#39;s blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">zhengzeqin&#39;s blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Lightly do not say gives up, otherwise sorry oneself</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vigilant-lovelace-ee6cb4.netlify.app"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-基于Jenkins-Gitlab-蒲公英-附上shell脚本" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/" class="article-date">
+  <time datetime="2019-04-11T11:03:00.000Z" itemprop="datePublished">2019-04-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基于Jenkins-Gitlab-蒲公英-附上shell脚本
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Jenkins-持续集成"><a href="#Jenkins-持续集成" class="headerlink" title="Jenkins 持续集成"></a>Jenkins 持续集成</h1><h2 id="自动化打包分发"><a href="#自动化打包分发" class="headerlink" title="自动化打包分发"></a>自动化打包分发</h2><blockquote>
+<p>基于Jenkins + Gitlab + 蒲公英</p>
+</blockquote>
+<h3 id="部署流程"><a href="#部署流程" class="headerlink" title="部署流程"></a>部署流程</h3><h4 id="安装Jenkins"><a href="#安装Jenkins" class="headerlink" title="安装Jenkins"></a>安装Jenkins</h4><ol>
+<li>安装Java环境，目前jenkins只支持jdk8 <a href="https://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">下载地址</a><blockquote>
+<ol>
+<li>安装完使用命令 java -version检查当前版本</li>
+<li>java选择如图</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<p><img src="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/1.png" alt=""></p>
+<ol start="2">
+<li>安装 Jenkins</li>
+</ol>
+<ul>
+<li><p>先确保已安装<a href="https://brew.sh/index_zh-cn" target="_blank" rel="noopener">Homebrew</a> </p>
+</li>
+<li><p>命令安装 brew install jenkins</p>
+</li>
+<li><p>设置开机自启动</p>
+<ul>
+<li><p>创建一个链接到开机启动文件夹里</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sfv &#x2F;usr&#x2F;local&#x2F;opt&#x2F;jenkins&#x2F;*.plist ~&#x2F;Library&#x2F;LaunchAgents</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>手动启动jenkins </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">launchctl load ~&#x2F;Library&#x2F;LaunchAgents&#x2F;homebrew.mxcl.jenkins.plist</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>手动关闭jenkins</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">launchctl unload ~&#x2F;Library&#x2F;LaunchAgents&#x2F;homebrew.mxcl.jenkins.plist</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>启动 Jenkins<blockquote>
+<p>浏览器打开连接</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a></li>
+</ul>
+<ol start="4">
+<li>按照提示，找到/Users/wsh/.jenkins/secrets/initialAdminPassword 这个目录下的initialAdminPassword文件</li>
+<li>Install suggested plugins 安装推荐插件</li>
+<li>安装GitLab Plugin 和 Gitlab Hook Plugin</li>
+</ol>
+<h4 id="配置shell脚本"><a href="#配置shell脚本" class="headerlink" title="配置shell脚本"></a>配置shell脚本</h4><blockquote>
+<p>注意 将shell脚本保存到工程目录下  保存为 zzq.sh</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br></pre></td><td class="code"><pre><span class="line">SECONDS&#x3D;0</span><br><span class="line"></span><br><span class="line">#默认使用的语言是英文</span><br><span class="line">export LANG&#x3D;zh_CN.UTF-8</span><br><span class="line">export LC_ALL&#x3D;zh_CN.UTF-8</span><br><span class="line"></span><br><span class="line">#假设脚本放置在与项目相同的路径下</span><br><span class="line">project_dir&#x3D;$(pwd)</span><br><span class="line"></span><br><span class="line">#编辑上传的文件全部放于此路径下,不影响原工程 ，保存项目目录地址</span><br><span class="line">upload_dir&#x3D;&quot;&#x2F;Users&#x2F;addcn&#x2F;Documents&#x2F;591TestAndUpload&quot;</span><br><span class="line"></span><br><span class="line">if [ -d &quot;$upload_dir&quot; ]; then</span><br><span class="line">    echo &quot;编辑上传的文件输出文件目录存在,目录为:$upload_dir&quot; </span><br><span class="line">else </span><br><span class="line">    echo &quot;编辑上传的文件目录不存在&quot; </span><br><span class="line">    mkdir -pv $upload_dir</span><br><span class="line">    echo &quot;创建打包文件目录$&#123;upload_dir&#125;成功&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#打包配置环境</span><br><span class="line">configuration&#x3D;&quot;Release&quot;</span><br><span class="line"></span><br><span class="line">#判断是用的xcodeproj还是直接xcworkspace，xcworkspace设置为true，否则设置为false</span><br><span class="line">isWorkSpace&#x3D;true</span><br><span class="line"></span><br><span class="line">#项目名称</span><br><span class="line">scheme&#x3D;&#96;find . -name *.xcodeproj | awk -F &quot;[&#x2F;.]&quot; &#39;&#123;print $(NF-1)&#125;&#39;&#96;</span><br><span class="line"></span><br><span class="line">projectName&#x3D;&quot;$&#123;scheme&#125;.xcworkspace&quot;</span><br><span class="line"></span><br><span class="line">#确定工程名称，如果用了cocopods，则使用xcworkspace，但是没有该文件则使用xcodeproj进行</span><br><span class="line"></span><br><span class="line">if [ -a &quot;$project_dir&#x2F;$projectName&quot; ]; then</span><br><span class="line">	isWorkSpace&#x3D;true</span><br><span class="line">	projectName&#x3D;&quot;$&#123;scheme&#125;.xcworkspace&quot;</span><br><span class="line">else</span><br><span class="line">	isWorkSpace&#x3D;false</span><br><span class="line">	projectName&#x3D;&quot;$&#123;scheme&#125;.xcodeproj&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">#指定项目地址</span><br><span class="line">project_path&#x3D;&quot;$project_dir&#x2F;$projectName&quot;</span><br><span class="line"></span><br><span class="line">#确认输出日期</span><br><span class="line">buildDate&#x3D;$(date +%Y%m%d%H%M%S)</span><br><span class="line"></span><br><span class="line">#指定输出路径</span><br><span class="line">output_path&#x3D;&quot;$upload_dir&#x2F;package$buildDate&quot;</span><br><span class="line"></span><br><span class="line">#指定输出归档文件地址</span><br><span class="line">archive_path&#x3D;&quot;$output_path&#x2F;$&#123;scheme&#125;.xcarchive&quot;</span><br><span class="line"></span><br><span class="line">#指定输出ipa名称</span><br><span class="line">ipa_name&#x3D;&quot;$&#123;scheme&#125;.ipa&quot;</span><br><span class="line"></span><br><span class="line">#指定输出ipa地址</span><br><span class="line">ipa_path&#x3D;&quot;$output_path&#x2F;$ipa_name&quot;</span><br><span class="line"></span><br><span class="line">#指定xarchive文件导出授权样式 bundle id</span><br><span class="line">provisioningProfileName&#x3D;&quot;XC iOS: com.xxxx.xxxxxxx&quot;</span><br><span class="line"></span><br><span class="line">#指定打包所使用的输出方式，目前支持app-store, package, ad-hoc, enterprise, development, 和developer-id，即xcodebuild的method参数</span><br><span class="line">export_method&#x3D;&#39;ad-hoc&#39;</span><br><span class="line"></span><br><span class="line">###############获取版本号,bundleID</span><br><span class="line">infoPlist&#x3D;&quot;$project_dir&#x2F;$scheme-Info.plist&quot;</span><br><span class="line">bundleVersion&#x3D;&#96;&#x2F;usr&#x2F;libexec&#x2F;PlistBuddy -c &quot;Print CFBundleShortVersionString&quot; $infoPlist&#96;</span><br><span class="line">bundleIdentifier&#x3D;&#96;&#x2F;usr&#x2F;libexec&#x2F;PlistBuddy -c &quot;Print CFBundleIdentifier&quot; $infoPlist&#96;</span><br><span class="line">bundleBuildVersion&#x3D;&#96;&#x2F;usr&#x2F;libexec&#x2F;PlistBuddy -c &quot;Print CFBundleVersion&quot; $infoPlist&#96;</span><br><span class="line">displayname&#x3D;&#96;&#x2F;usr&#x2F;libexec&#x2F;PlistBuddy -c &quot;Print CFBundleDisplayName&quot; $infoPlist&#96;</span><br><span class="line"></span><br><span class="line">#输出设定的变量值</span><br><span class="line">echo  &quot;项目名:$projectName&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;&#x3D;&#x3D;&#x3D;项目路径: $&#123;project_path&#125;&#x3D;&#x3D;&#x3D;&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;&#x3D;&#x3D;&#x3D;打包xarchive文件路径: $&#123;archive_path&#125;&#x3D;&#x3D;&#x3D;&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;&#x3D;&#x3D;&#x3D;打包ipa文件路径: $&#123;ipa_path&#125;&#x3D;&#x3D;&#x3D;&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;~~~~~~~~~~~~~~~~~~~开始编译~~~~~~~~~~~~~~~~~~~&quot;</span><br><span class="line"></span><br><span class="line">#处理没有输出打包文件目录的情况</span><br><span class="line">if [ -d &quot;$output_path&quot; ]; then</span><br><span class="line">    echo &quot;打包文件输出文件目录存在,目录为:$output_path&quot; </span><br><span class="line">else </span><br><span class="line">    echo &quot;打包文件目录不存在&quot; </span><br><span class="line">    mkdir -pv $output_path</span><br><span class="line">    echo &quot;创建打包文件目录$&#123;output_path&#125;成功&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">#处理编译文件目录的情况</span><br><span class="line">cd $upload_dir</span><br><span class="line">rm -rf .&#x2F;build</span><br><span class="line">buildAppToDir&#x3D;&quot;$upload_dir&#x2F;build&quot; #编译打包完成后.app文件存放的目录</span><br><span class="line"></span><br><span class="line">#重新进入当前项目路径下</span><br><span class="line">cd $project_dir</span><br><span class="line"></span><br><span class="line">security unlock-keychain -p &quot;addcn&quot; &#x2F;Users&#x2F;addcn&#x2F;Library&#x2F;Keychains&#x2F;login.keychain</span><br><span class="line"></span><br><span class="line">#开始编译app</span><br><span class="line">if $isWorkSpace ; then  #判断编译方式</span><br><span class="line">    echo  &quot;开始编译workspace....&quot; </span><br><span class="line">    xcodebuild  -workspace $projectName -scheme $scheme  -configuration $configuration clean build SYMROOT&#x3D;$buildAppToDir</span><br><span class="line">else</span><br><span class="line">    echo  &quot;开始编译target....&quot;</span><br><span class="line">    xcodebuild  -target  $projectName  -configuration $configuration clean build SYMROOT&#x3D;$buildAppToDir</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">#判断编译结果</span><br><span class="line">if test $? -eq 0</span><br><span class="line">then</span><br><span class="line">echo &quot;~~~~~~~~~~~~~~~~~~~编译成功~~~~~~~~~~~~~~~~~~~&quot;</span><br><span class="line">else</span><br><span class="line">echo &quot;~~~~~~~~~~~~~~~~~~~编译失败~~~~~~~~~~~~~~~~~~~&quot;</span><br><span class="line">exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;开始打包$scheme.app成$scheme.ipa.....&quot;</span><br><span class="line">cd $upload_dir</span><br><span class="line">findFolderName&#x3D;&#96;find . -name &quot;$configuration-*&quot; -type d |xargs basename&#96; #查找目录</span><br><span class="line">appDir&#x3D;$buildAppToDir&#x2F;$findFolderName  #app所在路径</span><br><span class="line"></span><br><span class="line">#重新进入当前项目路径下</span><br><span class="line">cd $project_dir</span><br><span class="line"></span><br><span class="line">echo &quot;打包xarchive文件,路径为:$archive_path&quot;</span><br><span class="line">if $isWorkSpace ; then  #判断编译方式</span><br><span class="line">    echo  &quot;开始打包workspace....&quot; </span><br><span class="line">    xcodebuild -workspace $projectName -scheme $scheme -destination generic&#x2F;platform&#x3D;iOS archive -configuration $&#123;configuration&#125; ONLY_ACTIVE_ARCH&#x3D;NO -archivePath $archive_path</span><br><span class="line">else</span><br><span class="line">    echo  &quot;开始打包target....&quot;</span><br><span class="line">    xcodebuild -target $projectName -scheme $scheme -destination generic&#x2F;platform&#x3D;iOS archive -configuration $&#123;configuration&#125; ONLY_ACTIVE_ARCH&#x3D;NO -archivePath $archive_path</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">#检查文件是否存在</span><br><span class="line">if [ -a &quot;$archive_path&quot; ]; then</span><br><span class="line">echo &quot;打包$scheme.xcarchive成功.&quot;</span><br><span class="line">else</span><br><span class="line">echo &quot;打包$scheme.xcarchive失败.&quot;</span><br><span class="line">exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># echo &quot;开始导出$scheme.xcarchive成$scheme.ipa.....&quot;</span><br><span class="line"># xcodebuild -exportArchive -exportFormat ipa -archivePath $archive_path -exportPath $appDir&#x2F;$ipa_name -exportProvisioningProfile $provisioningProfileName</span><br><span class="line"></span><br><span class="line">echo &quot;开始打包$scheme.app成$scheme.ipa.....&quot;</span><br><span class="line">xcrun -sdk iphoneos PackageApplication -v $appDir&#x2F;$scheme.app -o $appDir&#x2F;$ipa_name #将app打包成ipa</span><br><span class="line"></span><br><span class="line">echo &quot;检查打包文件$appDir&#x2F;$&#123;ipa_name&#125;是否存在&quot;</span><br><span class="line">if [ -f &quot;$appDir&#x2F;$ipa_name&quot; ];then</span><br><span class="line">echo &quot;打包$&#123;ipa_name&#125;成功.&quot;</span><br><span class="line">else</span><br><span class="line">echo &quot;打包$&#123;ipa_name&#125;失败.&quot;</span><br><span class="line">exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">cp -f -p $appDir&#x2F;$ipa_name $ipa_path   #拷贝ipa文件</span><br><span class="line">echo &quot;复制$&#123;ipa_name&#125;到$&#123;ipa_path&#125;成功&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;~~~~~~~~~~~~~~~~~~~结束打包，处理成功~~~~~~~~~~~~~~~~~~~&quot;</span><br><span class="line">#输出总用时</span><br><span class="line">echo &quot;&#x3D;&#x3D;&#x3D;Finished.编译加打包共花费时间: $&#123;SECONDS&#125;s&#x3D;&#x3D;&#x3D;&quot;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">echo &quot;正在上传至蒲公英平台&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;版本:$&#123;bundleVersion&#125;&quot;</span><br><span class="line"></span><br><span class="line">#蒲公英的ukey apikey</span><br><span class="line">curl -F &quot;file&#x3D;@$&#123;ipa_path&#125;&quot; -F &quot;uKey&#x3D;xxxxxxxxxxxxx&quot; -F &quot;_api_key&#x3D;xxxxxxxxxxxxxxx&quot; https:&#x2F;&#x2F;www.pgyer.com&#x2F;apiv1&#x2F;app&#x2F;upload &gt; $output_path&#x2F;code.text</span><br><span class="line"></span><br><span class="line">result&#x3D;&#96;cat $output_path&#x2F;code.text&#96;</span><br><span class="line"></span><br><span class="line">result1&#x3D;&#96;echo &quot;$&#123;result##*&quot;appQRCodeURL&quot;&#125;&quot;&#96;</span><br><span class="line"></span><br><span class="line">length&#x3D;&#96;expr $&#123;#result1&#125; - 6&#96;</span><br><span class="line"></span><br><span class="line">result2&#x3D;&#96;echo $&#123;result1:3:$length&#125;&#96;</span><br><span class="line"></span><br><span class="line">result3&#x3D;&#96;echo $result2 | sed &#39;s:\\\&#x2F;:\&#x2F;:g&#39;&#96;</span><br><span class="line"></span><br><span class="line">if [ ! $result3 ];</span><br><span class="line">then</span><br><span class="line">   echo &quot;~~~~~~~~~~~~~~~~~~~上传失败~~~~~~~~~~~~~~~~~~~&quot;</span><br><span class="line">else</span><br><span class="line">   echo &quot;~~~~~~~~~~~~~~~~~~~上传成功~~~~~~~~~~~~~~~~~~~&quot;</span><br><span class="line">   echo &quot;生成的二维码链接为:$&#123;result3&#125;&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># echo &quot;删除编译文件包和打包&quot;</span><br><span class="line"># rm -rf $buildAppToDir</span><br><span class="line"># rm -rf $output_path</span><br><span class="line"></span><br><span class="line">#输出总用时</span><br><span class="line">echo &quot;&#x3D;&#x3D;&#x3D;Finished.共花费时间: $&#123;SECONDS&#125;s&#x3D;&#x3D;&#x3D;&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置Jenkins"><a href="#配置Jenkins" class="headerlink" title="配置Jenkins"></a>配置Jenkins</h4><ol>
+<li>构建任务<ol>
+<li>选择新建任务</li>
+<li>如建远程develop。保存名称为remove_develop 项目</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/2.png" alt=""></p>
+<ol start="2">
+<li>配置任务-源码管理</li>
+</ol>
+<p><img src="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/3.png" alt=""></p>
+<ol start="3">
+<li>配置任务 - 定时触发器配置(可选)<a href="https://www.jianshu.com/p/509c59391b3b" target="_blank" rel="noopener">参考</a></li>
+</ol>
+<p><img src="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/4.png" alt=""></p>
+<ol start="4">
+<li>配置任务 - 构建执行shell脚本命令</li>
+</ol>
+<p><img src="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/5.png" alt=""></p>
+<h4 id="Jenkins配置结果"><a href="#Jenkins配置结果" class="headerlink" title="Jenkins配置结果"></a>Jenkins配置结果</h4><h5 id="项目任务建立-（本地dev-远程dev-远程master）"><a href="#项目任务建立-（本地dev-远程dev-远程master）" class="headerlink" title="项目任务建立 （本地dev 远程dev 远程master）"></a>项目任务建立 （本地dev 远程dev 远程master）</h5><p><img src="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/6.png" alt=""></p>
+<h5 id="执行构建"><a href="#执行构建" class="headerlink" title="执行构建"></a>执行构建</h5><p><img src="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/7.png" alt=""></p>
+<h5 id="执行历史"><a href="#执行历史" class="headerlink" title="执行历史"></a>执行历史</h5><p><img src="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/8.png" alt=""></p>
+<h4 id="蒲公英平台"><a href="#蒲公英平台" class="headerlink" title="蒲公英平台"></a>蒲公英平台</h4><p><img src="https://zeqinjie.github.io/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/9.png" alt=""></p>
+<h2 id="局域网ip-端口访问失败"><a href="#局域网ip-端口访问失败" class="headerlink" title="局域网ip + 端口访问失败"></a>局域网ip + 端口访问失败</h2><blockquote>
+<p>修改 </p>
+</blockquote>
+<ul>
+<li>homebrew.mxcl.jenkins.plist 的 httpListenAddress 为 0.0.0.0<blockquote>
+<p>目录地址</p>
+</blockquote>
+</li>
+<li>~/Library/LaunchAgents/homebrew.mxcl.jenkins.plist<blockquote>
+<p>重启</p>
+</blockquote>
+</li>
+<li>brew services stop jenkins</li>
+<li>brew services start jenkins</li>
+</ul>
+<h2 id="打包失败"><a href="#打包失败" class="headerlink" title="打包失败"></a>打包失败</h2><blockquote>
+<p>如报异常:<br>xcrun: error: unable to find utility “PackageApplication”, not a developer tool or in PATH<br>则根据如下链接操作:</p>
+<ol>
+<li>Xcode脚本自动化打包问题：xcrun: error: unable to find utility “PackageApplication”, not a developer tool or in PATH</li>
+<li>后面根据对比发现新版的Xcode少了这个PackageApplication（转注：PackageApplication在前几个版本已被标识为废弃，在8.3版本彻底移除了）<br>先去找个旧版的Xcode里面copy一份过来</li>
+<li>放到下面这个目录：<br>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/</li>
+<li>然后执行命令：</li>
+</ol>
+<ul>
+<li>sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/</li>
+<li>chmod +x /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/PackageApplication</li>
+</ul>
+</blockquote>
+<ul>
+<li>附上PackageApplication下载地址：</li>
+<li><a href="https://pan.baidu.com/s/1jHJF2Lo" target="_blank" rel="noopener">https://pan.baidu.com/s/1jHJF2Lo</a></li>
+<li><a href="https://www.cnblogs.com/Crazy-ZY/p/7115076.html" target="_blank" rel="noopener">参考链接</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vigilant-lovelace-ee6cb4.netlify.app/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/" data-id="ckd6pwrl4000pzssd13njcja6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/08/23/MVVM%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8A%BF%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          MVVM架构优势及应用场景
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/06/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Firebase的使用集合（二）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/addcn/" rel="tag">addcn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/addcn/" style="font-size: 10px;">addcn</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/01/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">iOS开发老司机的神兵利器-效率工具</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/13/ios13%E8%8B%B9%E6%9E%9C%E5%AF%B9UIWebView%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81/">ios13苹果对UIWebView不再支持</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/28/Jenkins-fastlane%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA/">Jenkins-fastlane自动构建</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/23/MVVM%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8A%BF%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">MVVM架构优势及应用场景</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/">基于Jenkins-Gitlab-蒲公英-附上shell脚本</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 zhengzeqin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

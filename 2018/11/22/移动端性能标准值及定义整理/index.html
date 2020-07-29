@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>移动端性能标准值及定义整理 | zhengzeqin&#39;s blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言 这个月Boss需要我们整理一份各个性能采集后的参考值，对于崩溃的数据采集，我们接入有Bugly,友盟。对于性能采集我们接入的是Firebase Performace   591的性能指标 指标说明 日报使用：崩溃率（友盟最新版）、启动时间（Performance）统计使用：崩溃率（友盟最新版）、用户崩溃率（友盟最新版）、ANR率&#x2F;卡顿率（bugly最新版）、启动时间（Performance）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端性能标准值及定义整理">
+<meta property="og:url" content="https://vigilant-lovelace-ee6cb4.netlify.app/2018/11/22/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%80%A7%E8%83%BD%E6%A0%87%E5%87%86%E5%80%BC%E5%8F%8A%E5%AE%9A%E4%B9%89%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="zhengzeqin&#39;s blogs">
+<meta property="og:description" content="前言 这个月Boss需要我们整理一份各个性能采集后的参考值，对于崩溃的数据采集，我们接入有Bugly,友盟。对于性能采集我们接入的是Firebase Performace   591的性能指标 指标说明 日报使用：崩溃率（友盟最新版）、启动时间（Performance）统计使用：崩溃率（友盟最新版）、用户崩溃率（友盟最新版）、ANR率&#x2F;卡顿率（bugly最新版）、启动时间（Performance）">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2018/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%80%A7%E8%83%BD%E6%A0%87%E5%87%86%E5%80%BC%E5%8F%8A%E5%AE%9A%E4%B9%89%E6%95%B4%E7%90%86/1.png">
+<meta property="article:published_time" content="2018-11-22T11:03:01.000Z">
+<meta property="article:modified_time" content="2020-07-29T01:55:46.508Z">
+<meta property="article:author" content="zhengzeqin">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zeqinjie.github.io/images/2018/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%80%A7%E8%83%BD%E6%A0%87%E5%87%86%E5%80%BC%E5%8F%8A%E5%AE%9A%E4%B9%89%E6%95%B4%E7%90%86/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="zhengzeqin&#39;s blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">zhengzeqin&#39;s blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Lightly do not say gives up, otherwise sorry oneself</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vigilant-lovelace-ee6cb4.netlify.app"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-移动端性能标准值及定义整理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/22/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%80%A7%E8%83%BD%E6%A0%87%E5%87%86%E5%80%BC%E5%8F%8A%E5%AE%9A%E4%B9%89%E6%95%B4%E7%90%86/" class="article-date">
+  <time datetime="2018-11-22T11:03:01.000Z" itemprop="datePublished">2018-11-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      移动端性能标准值及定义整理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>这个月Boss需要我们整理一份各个性能采集后的参考值，对于崩溃的数据采集，我们接入有Bugly,友盟。对于性能采集我们接入的是<a href="https://firebase.google.com/products/performance/" target="_blank" rel="noopener">Firebase Performace</a> </p>
+</blockquote>
+<h2 id="591的性能指标"><a href="#591的性能指标" class="headerlink" title="591的性能指标"></a>591的性能指标</h2><p><img src="https://zeqinjie.github.io/images/2018/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%80%A7%E8%83%BD%E6%A0%87%E5%87%86%E5%80%BC%E5%8F%8A%E5%AE%9A%E4%B9%89%E6%95%B4%E7%90%86/1.png" alt=""></p>
+<h3 id="指标说明"><a href="#指标说明" class="headerlink" title="指标说明"></a>指标说明</h3><blockquote>
+<p>日报使用：崩溃率（友盟最新版）、启动时间（Performance）<br><br>统计使用：崩溃率（友盟最新版）、用户崩溃率（友盟最新版）、ANR率/卡顿率（bugly最新版）、启动时间（Performance）、網路呼叫成功率（Performance）<br><br>崩溃率的定义：友盟比较符合大多数人的理解<br><br>参考值的定义：崩溃率和启动时间，虽然有找到一些参考值，不过对比之后显示我们的数据非常好（原因是平台统计数据为业内平均值），所以我们依据591近期的数据和自我要求，定义了一个参考值（如上日报）<br><br>其它：用户崩溃率、ANR率/卡顿率、網路呼叫成功率，对于App的性能评估也有一定的作用，不过日报里面建议先不添加，避免太多内容</p>
+</blockquote>
+<h2 id="App性能指标定义"><a href="#App性能指标定义" class="headerlink" title="App性能指标定义"></a>App性能指标定义</h2><table style="word-wrap:break-word;text-align:center">
+    <tr>
+        <td>平台</td> 
+        <td> 名称</td> 
+        <td >计算方式</td> 
+        <td >描述</td> 
+    </tr>
+    <tr>
+        <td rowspan="2" >友盟</td>    
+        <td >崩溃率/错误率</td>  
+        <td >崩溃次数/启动次数</td>
+        <td style="text-align:left">1.崩溃次数/错误次数：<br>该类错误在一定时间范围内产生的次数，也就是SDK上报的日志数量 <br> 2.启动次数:<br> 1).Android：启动是通过在所有activity中调用MobclickAgent.onResume() 和MobclickAgent.onPause()方法来监测的<br>2).iOS：进入后台即算是当前统计会话结束。当再次进入前台时，算作一次新的启动行为，<br>并开始新的统计会话</td>
+    </tr>
+    <tr>
+        <td >用户崩溃率</td>  
+        <td >影响用户/活跃用户</td> 
+        <td style="text-align:left">1.影响用户数：在一定时间范围内对该类错误的所有错误日志按照设备维度进行排重计数 <br> 2.活跃用户：所选时间段内，启动过应用的用户(去重)，启动过一次的用户即被视为活跃用户，包括新用户和老用户。</td>
+    </tr>
+    <tr>
+        <td rowspan="4">Bugly</td>    
+        <td >次数崩溃率</td>  
+        <td >发生次数/联网次数</td> 
+        <td style="text-align:left">1.发生次数：一个异常发生且被记录上报，计为一次异常发生。<br>2.联网次数：即 启动次数+跨天联网次数。<br>3.跨天联网：用户没有启动应用，只有应用进程在后台运行，且超过零点，计为一次跨天联网。<br>4.启动次数：以下场景均计为一次启动<br>1).应用完全退出后重新启动，计为一次启动；<br>2).应用被切换至后台后，30秒后被切换至前台，计为一次启动，若未超过30秒切换至前台，不算一次启动。</td> 
+    </tr>
+    <tr>
+        <td >用户崩溃率</td>  
+        <td >影响用户/活跃用户</td> 
+        <td style="text-align:left">1.影响用户数：在一定时间范围内对该类错误的所有错误日志按照设备维度进行排重计数 <br> 2.活跃用户：所选时间段内，启动过应用的用户(去重)，启动过一次的用户即被视为活跃用户，包括新用户和老用户。</td>
+    </tr>
+    <tr>
+        <td nowrap="nowrap">次数ANR率/卡顿率</td>  
+        <td nowrap="nowrap">发生次数/联网次数</td> 
+        <td >同上次数崩溃率描述</td>
+    </tr>
+    <tr>
+        <td >用户ANR率/卡顿率</td>  
+        <td >影响用户/联网用户</td> 
+        <td >同上用户崩溃率描述</td>
+    </tr>
+    <tr>
+        <td rowspan="2" nowrap="nowrap">Performace</td>    
+        <td >启动时间</td> 
+        <td >從程式碼初始化 - 使用者介面有所回應為止</td>
+        <td > <a href= "https://firebase.google.com/docs/perf-mon/automatic?authuser=0">定义</a><br>1.iOS:在应用将第一个 Object 加载到内存时开始，第一个 run loop 成功（应用收到 UIApplicationDidBecomeActiveNotification 通知后）时停止。<br>2.Android:在应用的 FirebasePerfProvider ContentProvider 完成其 onCreate 方法时开始，第一个 Activity 的 onResume() 方法被调用时停止。</td>
+    </tr>
+    <tr>
+        <td >網路呼叫成功率 </td> 
+        <td >成功响应次数/总响应次数</td>
+        <td > 由傳回 2xx 或 3xx 回應代碼的應用程式提出的 HTTP/S 要求百分比。如需查看詳細資訊，請前往「網路要求」分頁</td>
+    </tr>
+        <tr>
+        <td rowspan="2" nowrap="nowrap">GooglePlay</td>    
+        <td >當機率</td> 
+        <td >无</td>
+        <td > 使用者遇到至少1次當機情形的每日工作階段百分比。每日工作階段是指使用者一天內使用應用程式的時間</td>
+    </tr>
+    <tr>
+        <td >ANR 发生率 </td> 
+        <td >无</td>
+        <td > 使用者遇到至少 1 次 ANR 情形的每日工作階段百分比。每日工作階段是指使用者一天內使用應用程式的時間。</td>
+    </tr>
+    <tr>
+        <td nowrap="nowrap">App Store Connect </td> 
+        <td >崩溃率</td>
+        <td > 崩溃次数/使用次数</td>
+        <td >目前appstore 统计是限参与统计用户<br>计算方式是 = 崩溃次数/使用次数 （使用次数:使用时间超过2s的次数）附:仅限参与统计用户</td>
+    </tr>
+</table>
+
+
+<h2 id="App性能指标业内参考值"><a href="#App性能指标业内参考值" class="headerlink" title="App性能指标业内参考值"></a>App性能指标业内参考值</h2><table style="text-align:center">
+    <tr >
+        <td rowspan="2">名称</td>  
+        <td colspan="3">业内参考值</td>
+    </tr>
+    <tr>
+        <td>iOS</td> 
+        <td>Android</td> 
+        <td>数据来源</td>
+    </tr>
+    <tr>
+        <td rowspan="8">崩溃率</td>    
+        <td >1.01%</td>  
+        <td >0.2%</td>
+        <td >听云16年报告 - 年平均崩溃率</td>
+    </tr>
+    <tr>
+        <td>0.93%</td> 
+        <td>0.13%</td> 
+        <td >听云15年报告 - 年平均崩溃率</td>
+    </tr>
+    <tr>
+        <td>0.78%</td> 
+        <td>1.89%</td> 
+        <td >听云17年报告 - 房产中介 - 年平均崩溃率</td>
+    </tr>
+    <tr>
+        <td>0.79%</td> 
+        <td>0.17%</td> 
+        <td >听云17年报告 - 工具 - 年平均崩溃率</td>
+    </tr>
+    <tr>
+        <td>0.38%</td> 
+        <td>0.09%</td> 
+        <td >听云16年报告 - 软件工具 - 年平均崩溃率</td>
+    </tr>
+    <tr>
+        <td nowrap="nowrap">优秀值0.3%<br>标准值0.8%</td> 
+        <td nowrap="nowrap">优秀值0.2%<br>标准值0.4%</td> 
+        <td ><a href= "https://blog.csdn.net/x32sky/article/details/52778169">来自14年的听云报告</a><br>根据统计数据显示，当iOS的崩溃率超过0.8%，Android的崩溃率超过0.4%的时候，活跃用户有明显下降态势。</td>
+    </tr>
+    <tr>
+        <td>2.96%</td> 
+        <td>2.86%</td> 
+        <td ><a href= "https://blog.csdn.net/f2006116/article/details/55504714">bugly2016 移动应用质量大数据报告-平均崩溃率</a></td>
+    </tr>
+    <tr>
+        <td colspan="2">优秀：0.03%</td>  
+        <td>一些开发群中开发者的回复（滴滴，美团）</td> 
+    </tr>
+    <tr>
+        <td nowrap="nowrap">ANR率/卡顿率</td> 
+        <td>-</td> 
+        <td>1.09%</td> 
+        <td>GooglePlay的不良行为门槛</td> 
+    </tr>
+    <tr>
+        <td>用户ANR率</td> 
+        <td>-</td> 
+        <td>0.47%</td> 
+        <td>GooglePlay的不良行为门槛</td> 
+    </tr>
+    <tr>
+        <td>启动时间</td> 
+        <td colspan="2">5s</td>
+        <td>Performance标准值</td> 
+    </tr>
+    <tr>
+        <td>網路呼叫成功率</td> 
+        <td>97.45%</td> 
+        <td>95.48%</td> 
+        <td>听云17年报告 - 年平均 HTTP 请求成功率</td> 
+    </tr>
+    <tr>
+        <td rowspan="2">响应时间</td> 
+        <td>417.99ms</td> 
+        <td>439.65ms</td> 
+        <td>听云17年报告 - 房产中介 - 年平均响应时间</td> 
+    </tr>
+    <tr>
+        <td>652.69ms</td> 
+        <td>617.19ms</td> 
+        <td>听云17年报告 - 工具 - 年平均响应时间</td> 
+    </tr>
+</table>
+
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><h3 id="友盟定义参考"><a href="#友盟定义参考" class="headerlink" title="友盟定义参考"></a>友盟定义参考</h3><ul>
+<li><a href="https://developer.umeng.com/docs/67953/detail/67989#h1-u542Fu52A8u6B21u65703" target="_blank" rel="noopener">用户描述文档：</a></li>
+<li><a href="https://developer.umeng.com/docs/67953/detail/68133" target="_blank" rel="noopener">错误描述文档：</a></li>
+</ul>
+<h3 id="Bugly定义参考"><a href="#Bugly定义参考" class="headerlink" title="Bugly定义参考"></a>Bugly定义参考</h3><ul>
+<li><a href="https://bugly.qq.com/docs/introduction/bugly-introduction/?v=20180709165613#_6" target="_blank" rel="noopener">描述文档：</a></li>
+</ul>
+<h3 id="Preformace"><a href="#Preformace" class="headerlink" title="Preformace"></a>Preformace</h3><ul>
+<li><a href="https://support.google.com/firebase/answer/6318039?hl=zh-Hans" target="_blank" rel="noopener">Firebase 性能监控的数据收集</a></li>
+</ul>
+<h3 id="听云"><a href="#听云" class="headerlink" title="听云"></a>听云</h3><ul>
+<li><a href="https://www.tingyun.com/awr_mobile.html" target="_blank" rel="noopener">听云移动应用性能管理白皮书</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vigilant-lovelace-ee6cb4.netlify.app/2018/11/22/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%80%A7%E8%83%BD%E6%A0%87%E5%87%86%E5%80%BC%E5%8F%8A%E5%AE%9A%E4%B9%89%E6%95%B4%E7%90%86/" data-id="ckd6pwrl8000tzssd99q8amup" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/06/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Firebase的使用集合（二）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/21/Firebase%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Firebase的使用集合</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/addcn/" rel="tag">addcn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/addcn/" style="font-size: 10px;">addcn</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/01/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">iOS开发老司机的神兵利器-效率工具</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/13/ios13%E8%8B%B9%E6%9E%9C%E5%AF%B9UIWebView%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81/">ios13苹果对UIWebView不再支持</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/28/Jenkins-fastlane%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA/">Jenkins-fastlane自动构建</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/23/MVVM%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8A%BF%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">MVVM架构优势及应用场景</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/">基于Jenkins-Gitlab-蒲公英-附上shell脚本</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 zhengzeqin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

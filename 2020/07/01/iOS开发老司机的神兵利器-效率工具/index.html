@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>iOS开发老司机的神兵利器-效率工具 | zhengzeqin&#39;s blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言 作为iOS开发老司机们，我们肯定有各种各样的开发利器，以追求着最高效率。 此篇分享下我们常用的各种神兵利器。如果有朋友能推荐更好的欢迎补充，分享我！文章地址  Mac 常用的工具集iTerm2  iTerm2 + Oh My Zsh 打造舒适终端体验  功能：支持个性主题，高亮插件，可选择、命令补全等 命令补全功能方便我日常命令输入，有点回到日常IDE开发的感觉！效果图如下    ssh 工">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发老司机的神兵利器-效率工具">
+<meta property="og:url" content="https://vigilant-lovelace-ee6cb4.netlify.app/2020/07/01/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/index.html">
+<meta property="og:site_name" content="zhengzeqin&#39;s blogs">
+<meta property="og:description" content="前言 作为iOS开发老司机们，我们肯定有各种各样的开发利器，以追求着最高效率。 此篇分享下我们常用的各种神兵利器。如果有朋友能推荐更好的欢迎补充，分享我！文章地址  Mac 常用的工具集iTerm2  iTerm2 + Oh My Zsh 打造舒适终端体验  功能：支持个性主题，高亮插件，可选择、命令补全等 命令补全功能方便我日常命令输入，有点回到日常IDE开发的感觉！效果图如下    ssh 工">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_iTerm2.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_shuttle.jpg">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_uTools.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_uTools2.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Postman.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_MacDown.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_typora.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_tinypng.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_processon.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_JSONConverter.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_AppIconGear.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Swiftify.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_quicktype.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Lookin.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Echo.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_SQLProSQLite.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_BuildTimeAnalyzer.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Perfdog.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Jenkins.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_all.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_KnuffApp.jpg">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Bagel.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Go2Shell.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Alfred.jpg">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_XSimulatorMngr.png">
+<meta property="og:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Prepo.png">
+<meta property="article:published_time" content="2020-07-01T11:03:09.000Z">
+<meta property="article:modified_time" content="2020-07-29T01:55:46.504Z">
+<meta property="article:author" content="zhengzeqin">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vigilant-lovelace-ee6cb4.netlify.app/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_iTerm2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="zhengzeqin&#39;s blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">zhengzeqin&#39;s blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Lightly do not say gives up, otherwise sorry oneself</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vigilant-lovelace-ee6cb4.netlify.app"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-iOS开发老司机的神兵利器-效率工具" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/01/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" class="article-date">
+  <time datetime="2020-07-01T11:03:09.000Z" itemprop="datePublished">2020-07-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS开发老司机的神兵利器-效率工具
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>作为<code>iOS</code>开发老司机们，我们肯定有各种各样的开发利器，以追求着<code>最高效率</code>。<br><br> 此篇分享下我们常用的各种<code>神兵利器</code>。如果有朋友能推荐更好的欢迎补充，分享我！<a href="https://juejin.im/post/5efadbcf6fb9a07eae53f126" target="_blank" rel="noopener">文章地址</a></p>
+</blockquote>
+<h2 id="Mac-常用的工具集"><a href="#Mac-常用的工具集" class="headerlink" title="Mac 常用的工具集"></a>Mac 常用的工具集</h2><h3 id="iTerm2"><a href="#iTerm2" class="headerlink" title="iTerm2"></a><a href="https://github.com/sirius1024/iterm2-with-oh-my-zsh" target="_blank" rel="noopener">iTerm2</a></h3><blockquote>
+<ul>
+<li><code>iTerm2 + Oh My Zsh</code> 打造舒适终端体验 </li>
+<li>功能：支持个性主题，高亮插件，可选择、命令补全等</li>
+<li>命令补全功能方便我日常命令输入，有点回到日常IDE开发的感觉！<br>效果图如下</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_iTerm2.png" alt=""></p>
+<h3 id="ssh-工具-shuttle"><a href="#ssh-工具-shuttle" class="headerlink" title="ssh 工具 shuttle"></a><a href="https://github.com/fitztrev/shuttle" target="_blank" rel="noopener">ssh 工具 shuttle</a></h3><blockquote>
+<p>方便我们将日常终端命令集成到 <code>shuttle</code> 中，方便快速执行命令</p>
+<ul>
+<li>工作中用它执行shh终端命令，远程链接屏幕，以及自动打包等构建命令</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_shuttle.jpg" alt=""></p>
+<h3 id="uTools"><a href="#uTools" class="headerlink" title="uTools"></a><a href="https://www.u.tools/" target="_blank" rel="noopener">uTools</a></h3><blockquote>
+<ul>
+<li><code>uTools</code> 是一个极简、插件化、跨平台的现代桌面软件。通过自由选配丰富的插件，打造你得心应手的工具集合。当你熟悉它后，能够为你节约大量时间，让你可以更加专注地改变世界。</li>
+<li>上面有方便开发人员使用各种各样的插件，比如解码编码器，json编码器，以及各种开发文档，对于 <code>flutter</code> 开发提供 <code>flutter pub search</code>，方便搜寻pub包<br>等</li>
+<li>支持 <code>mac</code> , <code>windows</code> , <code>linux</code> 平台下载</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_uTools.png" alt=""></p>
+<blockquote>
+<p>快速启动</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_uTools2.png" alt=""></p>
+<h3 id="Postman"><a href="#Postman" class="headerlink" title="Postman"></a><a href="https://www.postman.com/" target="_blank" rel="noopener">Postman</a></h3><blockquote>
+<p><code>Postman</code> 是一款功能强大的网页调试与发送网页HTTP请求的工具</p>
+<ul>
+<li>方便开发测试接口数据，它能够发送任何类型的HTTP 请求 (GET, HEAD, POST, PUT)，同时能保留历史请求数据</li>
+<li>支持 <code>mac</code>,<code>windows</code>,<code>linux</code> 平台下载 以及Google浏览器插件安装</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Postman.png" alt=""></p>
+<h3 id="MacDown"><a href="#MacDown" class="headerlink" title="MacDown"></a><a href="https://macdown.uranusjr.com/" target="_blank" rel="noopener">MacDown</a></h3><blockquote>
+<ul>
+<li>MacDown 是一款 Mac 下的开源 Markdown 编辑器。<a href="https://github.com/MacDownApp/macdown" target="_blank" rel="noopener">开源地址</a></li>
+</ul>
+</blockquote>
+<blockquote>
+<p>功能部分：</p>
+<ul>
+<li>高度可定制的 Markdown 渲染</li>
+<li>支持代码块的语法着色</li>
+<li>智能自动补全</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_MacDown.png" alt=""></p>
+<h3 id="typora"><a href="#typora" class="headerlink" title="typora"></a><a href="https://www.typora.io/" target="_blank" rel="noopener">typora</a></h3><blockquote>
+<ul>
+<li><code>Typora</code> 也是一款支持实时预览的 Markdown 文本编辑器，是完全免费的。</li>
+<li>支持 <code>mac</code>,<code>windows</code>,<code>linux</code> 平台下载</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_typora.png" alt=""></p>
+<h2 id="推荐的网页在线工具"><a href="#推荐的网页在线工具" class="headerlink" title="推荐的网页在线工具"></a>推荐的网页在线工具</h2><h3 id="tinypng"><a href="#tinypng" class="headerlink" title="tinypng"></a><a href="https://tinypng.com/" target="_blank" rel="noopener">tinypng</a></h3><blockquote>
+<p>在线图片压缩，支持 png,jpg</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_tinypng.png" alt=""></p>
+<h3 id="processon"><a href="#processon" class="headerlink" title="processon"></a><a href="https://www.processon.com/" target="_blank" rel="noopener">processon</a></h3><blockquote>
+<p>免费在线作图、实时协作<br>它可以在线画流程图、思维导图、UI 原型图、UML、网络拓扑图、组织结构图等等，<br>您无需担心下载和更新的问题，不管 Mac 还是 Windows ，一个浏览器就可以随时随地的发挥创意，规划工作</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_processon.png" alt=""></p>
+<h2 id="iOS-开发工具集"><a href="#iOS-开发工具集" class="headerlink" title="iOS 开发工具集"></a>iOS 开发工具集</h2><h3 id="JSONConverter"><a href="#JSONConverter" class="headerlink" title="JSONConverter"></a><a href="https://github.com/iosyaowei/JSONConverter" target="_blank" rel="noopener">JSONConverter</a></h3><blockquote>
+<ul>
+<li><code>JSONConverter</code> 是MAC上iOS开发的辅助小工具，可以快速的把 json 数据转换生成对应的模型类属性，</li>
+<li>目前支持<code>Objective-C</code>、<code>Swift</code>、<code>Flutter</code>以及目前流行的第三方库: <code>SwiftyJSON</code>、<code>HandyJSON</code>，<code>ObjectMapper</code>,可以灵活选择构建 <code>class/struct</code> ，并支持配置类名前缀等,省去手敲模型的麻烦，借此提高我们的开发效率。</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_JSONConverter.png" alt=""></p>
+<h3 id="App-Icon-Gear"><a href="#App-Icon-Gear" class="headerlink" title="App Icon Gear"></a><a href="https://apps.apple.com/cn/app/app-icon-gear/id989646576?l=en&mt=12" target="_blank" rel="noopener">App Icon Gear</a></h3><blockquote>
+<p><code>App Icon Gear</code> 图标切割神器，只需一张1024pt图片，非常方便我们一键导出所有尺寸的icon图</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_AppIconGear.png" alt=""></p>
+<h3 id="Swiftify"><a href="#Swiftify" class="headerlink" title="Swiftify"></a><a href="https://swiftify.com/converter/home/" target="_blank" rel="noopener">Swiftify</a></h3><blockquote>
+<ul>
+<li><code>swiftify</code>插件。支持在线转换，或者添加插件到Xcode中,方便快速将Object-C代码转换为Swift</li>
+<li><a href="https://itunes.apple.com/cn/app/swiftify-objective-c-converter-for-xcode/id1183412116?mt=12" target="_blank" rel="noopener">插件安装AppStore下载地址</a></li>
+<li><a href="https://swiftify.com/converter/code/" target="_blank" rel="noopener">在线转换地址</a></li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Swiftify.png" alt=""></p>
+<h3 id="quicktype"><a href="#quicktype" class="headerlink" title="quicktype"></a><a href="https://app.quicktype.io/" target="_blank" rel="noopener">quicktype</a></h3><blockquote>
+<ul>
+<li>快速将json转化为Swift的模型对象</li>
+<li>基于Codable协议快速的数模序列化</li>
+<li>它不仅支持Swift,还支持其他语言比如Kotlin,Java,C#,Ruby,Object-c,Python</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_quicktype.png" alt=""></p>
+<h3 id="Lookin"><a href="#Lookin" class="headerlink" title="Lookin"></a><a href="https://lookin.work/" target="_blank" rel="noopener">Lookin</a></h3><blockquote>
+<p><code>Lookin</code> 可以查看与修改 iOS App 里的 UI 对象，类似于 Xcode 自带的 UI Inspector 工具，或另一款叫做 Reveal 的软件。但借助于“控制台”和“方法监听”功能，Lookin 还可以进行 UI 之外的调试。<br>此外，虽然 Lookin 主体是一款 macOS 程序，它亦可嵌入你的 iOS App 而单独运行在 iPhone 或 iPad 上。最后，Lookin 完全免费。</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Lookin.png" alt=""></p>
+<h3 id="Echo"><a href="#Echo" class="headerlink" title="Echo"></a><a href="https://github.com/didi/echo" target="_blank" rel="noopener">Echo</a></h3><blockquote>
+<p><code>Echo</code>是一款客户端的桌面端调试工具，中文意思回声，寓意着Mac端和手机端之间就像回声一样相互联动。</p>
+<ul>
+<li>简单易用：将 Echo 和 App 连接到同一个局域网即可，无须额外配置。</li>
+<li>功能齐全：目前已拥有网络请求、视图层级查看修改等10几个功能，覆盖了客户端研发的大部分场景。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>功能部分：</p>
+<ul>
+<li>高扩展性：插件和模块机制可以方便我们快速添加新功能。</li>
+<li>基础功能：网络请求、NSUserDefaults 查看修改、日志查看、Crash 查看、GPS 模拟、通知查看</li>
+<li>UI视图：视图层级查看修改、视图边框查看<br>性能检测：内存泄漏、卡顿检测</li>
+<li>业务功能：基于插件能力可快速扩展你自己的业务插件能力</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Echo.png" alt=""></p>
+<h3 id="SQLProSQLite"><a href="#SQLProSQLite" class="headerlink" title="SQLProSQLite"></a><a href="http://www.sqlitepro.com/" target="_blank" rel="noopener">SQLProSQLite</a></h3><blockquote>
+<ul>
+<li><code>SQLProSQLite</code>是一款优秀的数据库管理工具，不过要<code>付费</code> </li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_SQLProSQLite.png" alt=""></p>
+<h3 id="BuildTimeAnalyzer"><a href="#BuildTimeAnalyzer" class="headerlink" title="BuildTimeAnalyzer"></a><a href="https://github.com/RobertGummesson/BuildTimeAnalyzer-for-Xcode" target="_blank" rel="noopener">BuildTimeAnalyzer</a></h3><blockquote>
+<ul>
+<li>项目中的 Swift 代码越写越多，发觉编译速度开始变慢。BuildTimeAnalyzer 工具可以检测项目中 Swift 的编译速度。</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_BuildTimeAnalyzer.png" alt=""></p>
+<h3 id="Perfdog"><a href="#Perfdog" class="headerlink" title="Perfdog"></a><a href="https://perfdog.qq.com/" target="_blank" rel="noopener">Perfdog</a></h3><blockquote>
+<ul>
+<li>移动全平台 iOS/Android 性能测试、分析工具平台。快速定位分析性能问题，提升 APP 应用及游戏性能和品质。手机无需 ROOT/ 越狱，手机硬件、游戏及应用 APP 也无需做任何修改，极简化即插即用。</li>
+<li>支持 <code>mac</code> , <code>windows</code>,平台下载</li>
+</ul>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Perfdog.png" alt=""></p>
+<h2 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h2><h3 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a><a href="https://www.jenkins.io/" target="_blank" rel="noopener">Jenkins</a></h3><blockquote>
+<ul>
+<li><code>Jenkins</code>是开源 CI&amp;CD 软件领导者，提供超过1000个插件来支持构建、部署、自动化， 满足任何项目的需要。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>功能部分</p>
+<ul>
+<li>持续集成和持续交付</li>
+<li>简易安装，配置简单</li>
+<li>支持插件</li>
+<li>扩展，分布式</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>目前我们部门 <code>Jenkins</code> 平台已集成，自动化构建 <code>测试包</code> ，<code>AppStore包</code>，<code>图片压缩</code>，<code>OCLint</code> <code>SwiftLint</code> 语法检测，<code>组件自动构建</code>等，未来可期…</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Jenkins.png" alt=""></p>
+<h2 id="日常用的工具集"><a href="#日常用的工具集" class="headerlink" title="日常用的工具集"></a>日常用的工具集</h2><blockquote>
+<p>我的工具集全家桶</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_all.png" alt=""></p>
+<h2 id="网友推荐篇"><a href="#网友推荐篇" class="headerlink" title="网友推荐篇"></a>网友推荐篇</h2><h3 id="KnuffApp"><a href="#KnuffApp" class="headerlink" title="KnuffApp"></a><a href="https://github.com/KnuffApp/Knuff" target="_blank" rel="noopener">KnuffApp</a></h3><blockquote>
+<p>iOS 苹果推送测试工具, Mac OS 下的 apns 测试工具 ，类似的还有 <a href="https://github.com/shaojiankui/SmartPush" target="_blank" rel="noopener">SmartPush</a></p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_KnuffApp.jpg" alt=""></p>
+<h3 id="Bagel"><a href="#Bagel" class="headerlink" title="Bagel"></a><a href="https://github.com/yagiz/Bagel" target="_blank" rel="noopener">Bagel</a></h3><blockquote>
+<p><code>Bagel</code> 是一个小型的本地 iOS 网络调试器。它不是一个代理调试器，所以你不必纠结于证书、代理设置等。只要你的 iOS 设备和你的 Mac 在同一个网络中，你就可以查看由设备或模拟器分开的应用程序的网络流量。</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Bagel.png" alt=""></p>
+<h3 id="Go2Shell"><a href="#Go2Shell" class="headerlink" title="Go2Shell"></a><a href="https://zipzapmac.com/Go2Shell" target="_blank" rel="noopener">Go2Shell</a></h3><blockquote>
+<p><code>Go2Shell</code> 是一个可从Finder窗口在所需位置打开终端的工具。</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Go2Shell.png" alt=""></p>
+<h3 id="Alfred"><a href="#Alfred" class="headerlink" title="Alfred"></a><a href="https://www.alfredapp.com/" target="_blank" rel="noopener">Alfred</a></h3><blockquote>
+<p><code>Alfred</code> 免费用户只能只能使用基本搜索和快速启动应用功能，若要使用Workflows，则需要购买Powerpack。</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Alfred.jpg" alt=""></p>
+<h3 id="XSimulatorMngr"><a href="#XSimulatorMngr" class="headerlink" title="XSimulatorMngr"></a><a href="https://github.com/xndrs/XSimulatorMngr" target="_blank" rel="noopener">XSimulatorMngr</a></h3><blockquote>
+<p><code>XSimulatorMngr</code> 快速查看iOS模拟器文件的工具,类似 <a href="https://simpholders.com/" target="_blank" rel="noopener">SimPholders</a></p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_XSimulatorMngr.png" alt=""></p>
+<h3 id="Prepo"><a href="#Prepo" class="headerlink" title="Prepo"></a><a href="https://apps.apple.com/tw/app/prepo/id476533227?mt=12" target="_blank" rel="noopener">Prepo</a></h3><blockquote>
+<p>Prepo 类似 <code>App Icon Gear</code> 一样只需1024pt图，导出需要icon</p>
+</blockquote>
+<p><img src="/images/2020/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/iOS_tools_Prepo.png" alt=""></p>
+<blockquote>
+<p>…期待网友推荐待</p>
+</blockquote>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><blockquote>
+<p>重提下，此篇我们常用的各种<code>神兵利器</code>。如果有朋友能推荐更好的欢迎补充，分享给我,谢谢！</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vigilant-lovelace-ee6cb4.netlify.app/2020/07/01/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" data-id="ckd6pwrk4000czssd16f5dxgn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/13/ios13%E8%8B%B9%E6%9E%9C%E5%AF%B9UIWebView%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ios13苹果对UIWebView不再支持</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/addcn/" rel="tag">addcn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/addcn/" style="font-size: 10px;">addcn</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/01/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">iOS开发老司机的神兵利器-效率工具</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/13/ios13%E8%8B%B9%E6%9E%9C%E5%AF%B9UIWebView%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81/">ios13苹果对UIWebView不再支持</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/28/Jenkins-fastlane%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA/">Jenkins-fastlane自动构建</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/23/MVVM%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8A%BF%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">MVVM架构优势及应用场景</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/">基于Jenkins-Gitlab-蒲公英-附上shell脚本</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 zhengzeqin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

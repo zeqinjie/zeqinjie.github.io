@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>zhengzeqin&#39;s blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="zhengzeqin&#39;s blogs">
+<meta property="og:url" content="https://vigilant-lovelace-ee6cb4.netlify.app/page/2/index.html">
+<meta property="og:site_name" content="zhengzeqin&#39;s blogs">
+<meta property="article:author" content="zhengzeqin">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="zhengzeqin&#39;s blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">zhengzeqin&#39;s blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Lightly do not say gives up, otherwise sorry oneself</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vigilant-lovelace-ee6cb4.netlify.app"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-iOS怎么推送统计到达率" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/04/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/" class="article-date">
+  <time datetime="2018-07-04T11:03:02.000Z" itemprop="datePublished">2018-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/04/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/">iOS怎么推送统计到达率</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://juejin.im/post/5b3ca2d05188251afe7b66be" target="_blank" rel="noopener">掘金地址</a></p>
+<h2 id="ios摘要"><a href="#ios摘要" class="headerlink" title="ios摘要"></a>ios摘要</h2><ul>
+<li><a href="http://www.cocoachina.com/ios/20170126/18618.html" target="_blank" rel="noopener">iOS10里的通知与推送</a></li>
+<li><a href="https://www.jianshu.com/p/ace1b422bad4" target="_blank" rel="noopener">国内 90%以上的 iOS 开发者，对 APNs 的认识都是错的</a><h2 id="体系图"><a href="#体系图" class="headerlink" title="体系图"></a>体系图</h2><img src="https://zeqinjie.github.io/images/2018/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/1.png" alt=""></li>
+</ul>
+<h2 id="直接进入正题如何统计到达"><a href="#直接进入正题如何统计到达" class="headerlink" title="直接进入正题如何统计到达"></a>直接进入正题如何统计到达</h2><h3 id="在iOS10中新增两个拓展"><a href="#在iOS10中新增两个拓展" class="headerlink" title="在iOS10中新增两个拓展"></a>在iOS10中新增两个拓展</h3><ol>
+<li>其中的一个拓展UNNotificationServiceExtension 通知服务扩展</li>
+</ol>
+<ul>
+<li>UNNotificationServiceExtension 是修改远程推送携带的内容。</li>
+<li>UNNotificationServiceExtension 类 可以让开发者自定义推送展示的内容。你可以用 extension 修改推送内容和下载推送相关的资源。你可以在extension 中解密和加密的数据或下载推送相关的图片</li>
+</ul>
+<p>2.因此在这里可以提交到达的请求注意是这里处理时间只有30秒。为了不影响达到统计接口。一般会先发统计请求。同时通过缓存减少图片的请求。及图片的大小处理。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NotificationService</span> ()&lt;<span class="title">NSURLSessionDelegate</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="keyword">void</span> (^contentHandler)(UNNotificationContent *contentToDeliver);</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) UNMutableNotificationContent *bestAttemptContent;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NotificationService</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)didReceiveNotificationRequest:(UNNotificationRequest *)request withContentHandler:(<span class="keyword">void</span> (^)(UNNotificationContent * _Nonnull))contentHandler &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">self</span>.contentHandler = contentHandler;</span><br><span class="line">    <span class="keyword">self</span>.bestAttemptContent = [request.content mutableCopy];</span><br><span class="line">    <span class="built_in">NSDictionary</span> *userInfo = request.content.userInfo;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSString</span> *iconUrl = userInfo[[<span class="keyword">self</span> fcmPushStrFromStr:<span class="string">@"small_image"</span>]];<span class="comment">//小图</span></span><br><span class="line">    <span class="built_in">NSString</span> *imageUrl = userInfo[[<span class="keyword">self</span> fcmPushStrFromStr:<span class="string">@"image"</span>]];<span class="comment">//大图</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//重点这里发送给后端到达统计</span></span><br><span class="line">    [ProfessionTool sendFcmPushStatUserInfo:userInfo];<span class="comment">//统计到达数</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//这里是处理富文本图片 ，媒体视频等</span></span><br><span class="line">    UNNotificationAttachment *iconAtt = [<span class="keyword">self</span> attachmentWithUrl:iconUrl fileName:<span class="string">@"small_image"</span>];<span class="comment">//待优化缓存方式</span></span><br><span class="line">    UNNotificationAttachment *imageAtt = [<span class="keyword">self</span> attachmentWithUrl:imageUrl fileName:<span class="string">@"image"</span>];</span><br><span class="line">    <span class="built_in">NSMutableArray</span> *attArr = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line">    <span class="keyword">if</span> (iconAtt) [attArr addObject:iconAtt];</span><br><span class="line">    <span class="keyword">if</span> (imageAtt) [attArr addObject:imageAtt];</span><br><span class="line">    <span class="keyword">self</span>.bestAttemptContent.attachments = attArr;</span><br><span class="line">    <span class="keyword">self</span>.contentHandler(<span class="keyword">self</span>.bestAttemptContent);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (UNNotificationAttachment *)attachmentWithUrl:(<span class="built_in">NSString</span> *)url fileName:(<span class="built_in">NSString</span> *)fileName&#123;</span><br><span class="line">    <span class="keyword">if</span> (url) &#123;</span><br><span class="line">        <span class="built_in">UIImage</span> *iconImg = [<span class="keyword">self</span> getImageFromURL:url];</span><br><span class="line">        <span class="built_in">NSArray</span> *paths = <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>);</span><br><span class="line">        <span class="built_in">NSString</span> *documentsDirectoryPath = [paths firstObject];</span><br><span class="line">        <span class="built_in">NSString</span> *iconPath = [<span class="keyword">self</span> saveImage:iconImg withFileName:fileName ofType:<span class="string">@"png"</span> inDirectory:documentsDirectoryPath];</span><br><span class="line">        <span class="keyword">if</span> (iconPath &amp;&amp; ![iconPath isEqualToString:<span class="string">@""</span>]) &#123;</span><br><span class="line">            UNNotificationAttachment * attachment = [UNNotificationAttachment attachmentWithIdentifier:fileName URL:[<span class="built_in">NSURL</span> URLWithString:[<span class="string">@"file://"</span> stringByAppendingString:iconPath]] options:<span class="literal">nil</span> error:<span class="literal">nil</span>];</span><br><span class="line">            <span class="keyword">if</span> (attachment) &#123;</span><br><span class="line">                <span class="keyword">return</span> attachment;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)serviceExtensionTimeWillExpire &#123;</span><br><span class="line">    <span class="comment">// Called just before the extension will be terminated by the system.</span></span><br><span class="line">    <span class="comment">// Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.</span></span><br><span class="line">    <span class="keyword">self</span>.contentHandler(<span class="keyword">self</span>.bestAttemptContent);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> mark - private Method</span></span><br><span class="line">- (<span class="built_in">UIImage</span> *)getImageFromURL:(<span class="built_in">NSString</span> *)fileURL &#123;</span><br><span class="line">    DLog(<span class="string">@"执行图片下载函数"</span>);</span><br><span class="line">    <span class="built_in">UIImage</span> * result;</span><br><span class="line">    <span class="comment">//dataWithContentsOfURL方法需要https连接</span></span><br><span class="line">    <span class="built_in">NSData</span> * data = [<span class="built_in">NSData</span> dataWithContentsOfURL:[<span class="built_in">NSURL</span> URLWithString:fileURL]];</span><br><span class="line">    result = [<span class="built_in">UIImage</span> imageWithData:data];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将所下载的图片保存到本地</span></span><br><span class="line">- (<span class="built_in">NSString</span> *)saveImage:(<span class="built_in">UIImage</span> *)image withFileName:(<span class="built_in">NSString</span> *)imageName ofType:(<span class="built_in">NSString</span> *)extension inDirectory:(<span class="built_in">NSString</span> *)directoryPath &#123;</span><br><span class="line">    <span class="built_in">NSString</span> *urlStr = <span class="string">@""</span>;</span><br><span class="line">    <span class="keyword">if</span> ([[extension lowercaseString] isEqualToString:<span class="string">@"png"</span>])&#123;</span><br><span class="line">        urlStr = [directoryPath stringByAppendingPathComponent:[<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@.%@"</span>, imageName, <span class="string">@"png"</span>]];</span><br><span class="line">        [<span class="built_in">UIImagePNGRepresentation</span>(image) writeToFile:urlStr options:<span class="built_in">NSAtomicWrite</span> error:<span class="literal">nil</span>];</span><br><span class="line">        </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([[extension lowercaseString] isEqualToString:<span class="string">@"jpg"</span>] ||</span><br><span class="line">               [[extension lowercaseString] isEqualToString:<span class="string">@"jpeg"</span>])&#123;</span><br><span class="line">        urlStr = [directoryPath stringByAppendingPathComponent:[<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@.%@"</span>, imageName, <span class="string">@"jpg"</span>]];</span><br><span class="line">        [<span class="built_in">UIImageJPEGRepresentation</span>(image, <span class="number">1.0</span>) writeToFile:urlStr options:<span class="built_in">NSAtomicWrite</span> error:<span class="literal">nil</span>];</span><br><span class="line">        </span><br><span class="line">    &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">        DLog(<span class="string">@"extension error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> urlStr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//因项目中使用google 的FCM推送收到的推送字段有点不一样</span></span><br><span class="line">- (<span class="built_in">NSString</span> *)fcmPushStrFromStr:(<span class="built_in">NSString</span> *)str&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *resultStr = str;</span><br><span class="line">    <span class="built_in">NSString</span> *fcmPre = <span class="string">@"gcm.notification."</span>;</span><br><span class="line">    <span class="keyword">if</span> (![resultStr containsString:fcmPre]) &#123;</span><br><span class="line">        resultStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@%@"</span>,fcmPre,resultStr];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resultStr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.服务端配置内容需要添加”mutable-content”:1 （富文本推送）<br>很多人会搞混”content-available”:1（静默推送）</p>
+<p>4.当然了google FCM的富文本推送是”mutable_content”:”true”<br>国内用的比较多的是激光JPush.百度推送等。后续会写篇google FCM 推送的配置方式</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">拿到的回调内容</span><br><span class="line">&#x2F;&#x2F;iOS10 之前</span><br><span class="line">&#123;</span><br><span class="line">&quot;aps&quot; : &#123;</span><br><span class="line">    &quot;alert&quot; : &quot;title&quot;,</span><br><span class="line">    &quot;badge&quot; : 1,</span><br><span class="line">    &quot;sound&quot;:&quot;default&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;iOS10 新增的文案多样性</span><br><span class="line">&#123;</span><br><span class="line">&quot;aps&quot; : &#123;</span><br><span class="line">    &quot;alert&quot; : &#123; </span><br><span class="line">         &quot;title&quot; : &quot;title&quot;, </span><br><span class="line">         &quot;subtitle&quot; : &quot;subtitle&quot;,         </span><br><span class="line">         &quot;body&quot; : &quot;body&quot;</span><br><span class="line">                &#125;,</span><br><span class="line">    &quot;badge&quot; : 1,</span><br><span class="line">    &quot;sound&quot;:&quot;default&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接收到推送回调函数</span></span><br><span class="line"><span class="comment">//iOS1O之前的 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//NS_AVAILABLE_IOS(3_0)</span></span><br><span class="line">- (<span class="keyword">void</span>)application:(<span class="built_in">UIApplication</span> *)application didReceiveRemoteNotification:(<span class="built_in">NSDictionary</span> *)userInfo&#123;</span><br><span class="line">    <span class="comment">//最开始的接收推送回调</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//NS_AVAILABLE_IOS(7_0)</span></span><br><span class="line">- (<span class="keyword">void</span>)application:(<span class="built_in">UIApplication</span> *)application didReceiveRemoteNotification:(<span class="built_in">NSDictionary</span> *)userInfo fetchCompletionHandler:(<span class="keyword">void</span> (^)(<span class="built_in">UIBackgroundFetchResult</span>))completionHandler&#123;</span><br><span class="line">    <span class="comment">//这里亦可接收静默推送回调   </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//iOS10之后统一 </span></span><br><span class="line"><span class="comment">//  iOS10特性。App在前台获取通知</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification*)notification withCompletionHandler:(<span class="keyword">void</span> (^)(UNNotificationPresentationOptions options))completionHandler &#123;</span><br><span class="line"></span><br><span class="line">   completionHandler(UNNotificationPresentationOptionAlert);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//点击通知进入App</span></span><br><span class="line">- (<span class="keyword">void</span>)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(<span class="keyword">void</span> (^)())completionHandler &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.与之前不同是ios10前台运行也能收到推送通知栏同样在上面userNotificationCenter接收处理点击事件</p>
+<p>6.当然本人曾在低于iOS10版本通用过pod ‘JDStatusBarNotification’库模仿一个推送通知栏</p>
+<p>7.测试发送iOS10的富文本推送低于iOS10版本的的用户只能收到title. subtitle内容是获取不到的。</p>
+<p>8.Target的调试 将项目运行起来，然后发送一条推送之后，激活Service Extension，在XCode -DEBUG下Attach to Process 选择对于的target</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vigilant-lovelace-ee6cb4.netlify.app/2018/07/04/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/" data-id="ckd6pwrk7000ezssd6ralajz8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/addcn/" rel="tag">addcn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/addcn/" style="font-size: 10px;">addcn</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/01/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">iOS开发老司机的神兵利器-效率工具</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/13/ios13%E8%8B%B9%E6%9E%9C%E5%AF%B9UIWebView%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81/">ios13苹果对UIWebView不再支持</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/28/Jenkins-fastlane%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA/">Jenkins-fastlane自动构建</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/23/MVVM%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8A%BF%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">MVVM架构优势及应用场景</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/">基于Jenkins-Gitlab-蒲公英-附上shell脚本</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 zhengzeqin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

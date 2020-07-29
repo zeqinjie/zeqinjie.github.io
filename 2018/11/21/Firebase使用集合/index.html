@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Firebase的使用集合 | zhengzeqin&#39;s blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Firebase Firebase是一家实时后端数据库创业公司，它能帮助开发者很快的写出Web端和移动端的应用。自2014年10月Google收购Firebase以来，用户可以在更方便地使用Firebase的同时，结合Google的云服务  前言因为我们公司是用户群是在台湾，所以在第三方库的选型上选择了Firebase。因为它拥有较丰富的第三方库集。 基础接入 创建Firebase开发者账户注册地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Firebase的使用集合">
+<meta property="og:url" content="https://vigilant-lovelace-ee6cb4.netlify.app/2018/11/21/Firebase%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/index.html">
+<meta property="og:site_name" content="zhengzeqin&#39;s blogs">
+<meta property="og:description" content="Firebase Firebase是一家实时后端数据库创业公司，它能帮助开发者很快的写出Web端和移动端的应用。自2014年10月Google收购Firebase以来，用户可以在更方便地使用Firebase的同时，结合Google的云服务  前言因为我们公司是用户群是在台湾，所以在第三方库的选型上选择了Firebase。因为它拥有较丰富的第三方库集。 基础接入 创建Firebase开发者账户注册地">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/1.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/2.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/3.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/4.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/5.png">
+<meta property="og:image" content="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/6.png">
+<meta property="article:published_time" content="2018-11-21T11:03:03.000Z">
+<meta property="article:modified_time" content="2020-07-29T01:55:46.504Z">
+<meta property="article:author" content="zhengzeqin">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="zhengzeqin&#39;s blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">zhengzeqin&#39;s blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Lightly do not say gives up, otherwise sorry oneself</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vigilant-lovelace-ee6cb4.netlify.app"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Firebase使用集合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/21/Firebase%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/" class="article-date">
+  <time datetime="2018-11-21T11:03:03.000Z" itemprop="datePublished">2018-11-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Firebase的使用集合
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Firebase"><a href="#Firebase" class="headerlink" title="Firebase"></a>Firebase</h1><blockquote>
+<p>Firebase是一家实时后端数据库创业公司，它能帮助开发者很快的写出Web端和移动端的应用。自2014年10月Google收购Firebase以来，用户可以在更方便地使用Firebase的同时，结合<a href="https://firebase.google.cn/" target="_blank" rel="noopener">Google的云服务</a></p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为我们公司是用户群是在台湾，所以在第三方库的选型上选择了Firebase。因为它拥有较丰富的第三方库集。</p>
+<h2 id="基础接入"><a href="#基础接入" class="headerlink" title="基础接入"></a>基础接入</h2><ol>
+<li>创建Firebase开发者账户<a href="https://www.firebase.com/login/" target="_blank" rel="noopener">注册地址</a></li>
+<li>安装Firebase.framework<br>通过Cocopod 安装<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &#39;Firebase&#x2F;Core&#39;</span><br></pre></td></tr></table></figure></li>
+<li>添加Firebase配置文件 <a href="https://firebase.google.com/docs/ios/setup?authuser=0" target="_blank" rel="noopener">将 Firebase 添加到您的 iOS 项目</a></li>
+</ol>
+<ul>
+<li>在控制台中创建项目后，下载配置文件GoogleService-Info.plist，移动加入项目中</li>
+<li>在didFinishLaunchingWithOptions 初始化firebase</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[FIRApp configure];</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="目前支持Firebase服务有"><a href="#目前支持Firebase服务有" class="headerlink" title="目前支持Firebase服务有"></a>目前支持Firebase服务有</h4><table>
+<thead>
+<tr>
+<th>pod</th>
+<th>服务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pod ‘Firebase/Core’</td>
+<td>必备库和 Analytics</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/AdMob’</td>
+<td>AdMob</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/Messaging’</td>
+<td>必备库和 Analytics</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/AdMob’</td>
+<td>AdMob</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/Database’</td>
+<td>实时数据库</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/Invites’</td>
+<td>邀请</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/DynamicLinks’</td>
+<td>动态链接</td>
+</tr>
+<tr>
+<td>pod ‘Fabric’，pod ‘Crashlytics’</td>
+<td>Crashlytics</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/RemoteConfig’</td>
+<td>远程配置</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/Auth’</td>
+<td>身份验证</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/Storage’</td>
+<td>存储</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/Performance’</td>
+<td>性能监控</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/Firestore’</td>
+<td>Cloud Firestore</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/Functions’</td>
+<td>Cloud Functions for Firebase 客户端 SDK</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/MLVision’</td>
+<td>ML Kit Vision API</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/MLVisionLabelModel’</td>
+<td>机器学习套件（基于设备的标签检测）</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/MLVisionBarcodeModel’</td>
+<td>机器学习套件（基于设备的条形码扫描）</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/MLVisionTextModel’</td>
+<td>机器学习套件（基于设备的文字识别）</td>
+</tr>
+<tr>
+<td>pod ‘Firebase/MLVisionFaceModel’</td>
+<td>机器学习套件（基于设备的面部检测）</td>
+</tr>
+</tbody></table>
+<h2 id="基于Firebase下的GA统计"><a href="#基于Firebase下的GA统计" class="headerlink" title="基于Firebase下的GA统计"></a>基于Firebase下的GA统计</h2><p>1.配合GTM SDK 将firebase采集到的数据发送到Google Analytics中</p>
+<blockquote>
+<p>添加GTM SDK 与 Google Analytics SDK</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod &#39;GoogleIDFASupport&#39;  &#x2F;&#x2F; Google Analytics </span><br><span class="line">pod &#39;GoogleTagManager&#39;   &#x2F;&#x2F; GTM SDK</span><br></pre></td></tr></table></figure>
+<ul>
+<li>登录GTM的平台 <a href="https://tagmanager.google.com/?hl=zh_CN#/org/xM83TFWlQfiVaBKyzHY6Zw" target="_blank" rel="noopener">地址</a></li>
+</ul>
+<p><img src="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/1.png" alt=""></p>
+<ul>
+<li>创建触发器</li>
+</ul>
+<p><img src="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/2.png" alt=""></p>
+<ul>
+<li>创建代码  GA-ID变量即是 我们的Google Analytics平台的ID</li>
+</ul>
+<p><img src="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/3.png" alt=""></p>
+<blockquote>
+<p>简述：我们先在 GTM container 网页上设定想追踪的 tag（标籤），每个 tag 会包含一个 trigger（触发条件），当 Firebase 发送事件后 GTM 会去比对这个事件是不是符合某个 tag 的触发条件，在这次的例子中就会将数据发送到 GA 报表上。触发条件比较灵活，可以自定义。包括维度的划分。这里就不再详细介绍。</p>
+</blockquote>
+<blockquote>
+<p>firebase的发送函数是</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;触发器事件名称</span><br><span class="line">#define Event_Trigger    @&quot;event_trigger_str&quot;</span><br><span class="line">&#x2F;&#x2F; 统计类别</span><br><span class="line">#define Event_Category    @&quot;event_category_str&quot;</span><br><span class="line">&#x2F;&#x2F; 统计动作</span><br><span class="line">#define Event_Action    @&quot;event_action_str&quot;</span><br><span class="line">&#x2F;&#x2F; 统计标签</span><br><span class="line">#define Event_Label    @&quot;event_label_str&quot;</span><br><span class="line">              </span><br><span class="line">&#x2F;&#x2F; 即可将统计事件发送到GA中              </span><br><span class="line">+ (void)fireBaseEvent:(NSString *)category</span><br><span class="line">               action:(NSString *)action</span><br><span class="line">                label:(NSString *)label&#123;</span><br><span class="line">    [FIRAnalytics logEventWithName:Event_Param_Trigger parameters:@&#123;Event_Param_Category:category,Event_Param_Action:action,Event_Param_Label:label&#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="FCM推送"><a href="#FCM推送" class="headerlink" title="FCM推送"></a>FCM推送</h2><ol>
+<li>通过cocopod库设置Fcm sdk, fcm 中支持<a href="https://firebase.google.com/docs/cloud-messaging/concept-options?authuser=0" target="_blank" rel="noopener">通知消息和数据消息</a></li>
+<li>在”专案设置-设置-Cloud Messaging”中上传开发者凭证到fcm平台</li>
+</ol>
+<p><img src="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/4.png" alt=""></p>
+<ol start="3">
+<li>配置代码如下</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;通过Cocopod导入</span><br><span class="line">pod &#39;Firebase&#x2F;Messaging&#39;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第一步设置代理</span><br><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions&#123;</span><br><span class="line">    &#x2F;&#x2F;配置FCM 代理</span><br><span class="line">    [FIRMessaging messaging].delegate &#x3D; self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)applicationDidEnterBackground:(UIApplication *)application &#123;</span><br><span class="line">    [self disconnectToFCM];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationDidBecomeActive:(UIApplication *)application&#123;</span><br><span class="line">    [self connectToFCM];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 注册TOKEN</span><br><span class="line">- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken&#123;</span><br><span class="line">   #if DEBUG</span><br><span class="line">    [[FIRMessaging messaging] setAPNSToken:deviceToken type:FIRMessagingAPNSTokenTypeSandbox];</span><br><span class="line">    #else</span><br><span class="line">    [[FIRMessaging messaging] setAPNSToken:deviceToken type:FIRMessagingAPNSTokenTypeProd];</span><br><span class="line">    #endif</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#pragma mark - RemoteMessage Connect</span><br><span class="line">&#x2F;&#x2F; 链接fcm</span><br><span class="line">- (void)connectToFCM&#123;</span><br><span class="line">    NSString *refreshedToken &#x3D; [[FIRInstanceID instanceID] token];</span><br><span class="line">    DLog(@&quot;InstanceID token: %@&quot;, refreshedToken);</span><br><span class="line">    [FIRMessaging messaging].shouldEstablishDirectChannel &#x3D; YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 断开fcm</span><br><span class="line">- (void)disconnectToFCM&#123;</span><br><span class="line">    [FIRMessaging messaging].shouldEstablishDirectChannel &#x3D; NO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#pragma mark - FIRMessagingRemoteMessage Delegate</span><br><span class="line">&#x2F;&#x2F;获取fcmtoken回调函数</span><br><span class="line">- (void)messaging:(nonnull FIRMessaging *)messaging didReceiveRegistrationToken:(nonnull NSString *)fcmToken&#123;</span><br><span class="line">    DLog(@&quot;didReceiveRegistrationToken fcmToken &#x3D; %@&quot;,fcmToken);</span><br><span class="line">    [self connectToFCM];</span><br><span class="line">    &#x2F;&#x2F; 注意 将fcm 发送到自己的后端采集token及用户的设备id,用于发送推送</span><br><span class="line">    &#x2F;&#x2F; .......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;注意：fcm data 数据消息的接收回调，如果是通知消息回调，走的是Apple 的api此处不详述</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;ios10 之前didReceiveRegistrationToken</span><br><span class="line">- (void)applicationReceivedRemoteMessage:(nonnull FIRMessagingRemoteMessage *)remoteMessage&#123;</span><br><span class="line">    DLog(@&quot;RemoteMessageDeleagte remoteMessage &#x3D; %@&quot;,remoteMessage);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;iOS10 及之后</span><br><span class="line">- (void)messaging:(nonnull FIRMessaging *)messaging didReceiveMessage:(nonnull FIRMessagingRemoteMessage *)remoteMessage&#123;</span><br><span class="line">    DLog(@&quot;RemoteMessageDeleagte didReceiveMessage &#x3D; %@&quot;,remoteMessage);&#x2F;&#x2F;fcm data 数据没有带前缀gcm.notification.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Performace监控"><a href="#Performace监控" class="headerlink" title="Performace监控"></a>Performace监控</h2><p><img src="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/5.png" alt=""></p>
+<p>firebase 的performance能采集到数据有<a href="https://support.google.com/firebase/answer/6318039?hl=zh-Hans" target="_blank" rel="noopener">链接</a></p>
+<ul>
+<li>启动速度</li>
+<li>网络呼叫成功率</li>
+<li>網路回應 MIME 類型</li>
+<li>網路回應延遲時間</li>
+<li>不同畫面的顯示速度緩慢資料 （可以自定义采集内容）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;通过Cocopod导入</span><br><span class="line">pod &#39;Firebase&#x2F;Performance&#39;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>performance 只要解决导入库,即可。默认会在[FIRApp configure]; 已初始化</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="关于自定义采集-page-speed"><a href="#关于自定义采集-page-speed" class="headerlink" title="关于自定义采集 page_speed"></a>关于自定义采集 page_speed</h4><p><img src="https://zeqinjie.github.io/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/6.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 自定义采集是通过setValue:forAttribute 方式设置采集属性及值</span><br><span class="line">+ (void)performaceLoadTimeWithName:(NSString *)name comeDate:(NSDate *)comeDate&#123;</span><br><span class="line">        FIRTrace *trace &#x3D; [FIRPerformance startTraceWithName:name];</span><br><span class="line">        NSTimeInterval time &#x3D; fabs([comeDate timeIntervalSinceNow]);</span><br><span class="line">        [trace setValue:[NSString stringWithFormat:@&quot;%.2f秒&quot;,time] forAttribute:@&quot;page_speed&quot;];</span><br><span class="line">        DLog(@&quot;PageName &#x3D; %@,时间差(秒) &#x3D; %.2f&quot;,name,time);</span><br><span class="line">        [trace stop];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vigilant-lovelace-ee6cb4.netlify.app/2018/11/21/Firebase%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88/" data-id="ckd6pwrjf0000zssdex9eeek8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/22/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%80%A7%E8%83%BD%E6%A0%87%E5%87%86%E5%80%BC%E5%8F%8A%E5%AE%9A%E4%B9%89%E6%95%B4%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          移动端性能标准值及定义整理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/21/%E5%85%AC%E5%8F%B8%E5%A4%BA%E6%97%97%E6%AF%94%E8%B5%9B-iOS%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">公司夺旗比赛-iOS题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/addcn/" rel="tag">addcn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/addcn/" style="font-size: 10px;">addcn</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/01/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">iOS开发老司机的神兵利器-效率工具</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/13/ios13%E8%8B%B9%E6%9E%9C%E5%AF%B9UIWebView%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81/">ios13苹果对UIWebView不再支持</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/28/Jenkins-fastlane%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA/">Jenkins-fastlane自动构建</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/23/MVVM%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8A%BF%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">MVVM架构优势及应用场景</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/">基于Jenkins-Gitlab-蒲公英-附上shell脚本</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 zhengzeqin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
