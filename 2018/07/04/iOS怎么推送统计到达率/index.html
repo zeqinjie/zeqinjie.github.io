@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="zhengzeqin"><meta name="copyright" content="zhengzeqin"><meta name="generator" content="Hexo 4.2.1"><meta name="theme" content="hexo-theme-yun"><title>iOS怎么推送统计到达率 | zhengzeqin's blogs</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="none" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.16/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_stqaphw3j4.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="shortcut icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/hexo-theme-yun.css"><link rel="alternate" href="/atom.xml" title="zhengzeqin's blogs"><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"root":"/","title":"Zeqin的小站","version":"0.9.4","anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><script>(function(){
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();</script><meta name="description" content="ios摘要 iOS10里的通知与推送 国内 90%以上的 iOS 开发者，对 APNs 的认识都是错的体系图  直接进入正题如何统计到达在iOS10中新增两个拓展 其中的一个拓展UNNotificationServiceExtension 通知服务扩展   UNNotificationServiceExtension 是修改远程推送携带的内容。 UNNotificationServiceExten">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS怎么推送统计到达率">
+<meta property="og:url" content="https://zhengzeqin.netlify.app/2018/07/04/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/index.html">
+<meta property="og:site_name" content="zhengzeqin&#39;s blogs">
+<meta property="og:description" content="ios摘要 iOS10里的通知与推送 国内 90%以上的 iOS 开发者，对 APNs 的认识都是错的体系图  直接进入正题如何统计到达在iOS10中新增两个拓展 其中的一个拓展UNNotificationServiceExtension 通知服务扩展   UNNotificationServiceExtension 是修改远程推送携带的内容。 UNNotificationServiceExten">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2018/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/1.png">
+<meta property="article:published_time" content="2018-07-04T19:03:02.000Z">
+<meta property="article:modified_time" content="2020-08-25T02:27:27.688Z">
+<meta property="article:author" content="zhengzeqin">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhengzeqin.netlify.app/images/2018/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/1.png"><link rel="alternate" href="/atom.xml" title="zhengzeqin's blogs" type="application/atom+xml">
+</head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script defer src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="zhengzeqin"><img width="96" loading="lazy" src="https://avatars0.githubusercontent.com/u/8444646?s=460&amp;u=92eeef27cb894c8d36a516501f39941ab89cd7d0&amp;v=4" alt="zhengzeqin"></a><div class="site-author-name"><a href="/about/">zhengzeqin</a></div><a class="site-name" href="/about/site.html">zhengzeqin's blogs</a><sub class="site-subtitle">Lightly do not say gives up, otherwise sorry oneself</sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">13</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">1</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">2</span></a></div><a class="site-state-item hty-icon-button" href="https://yun.yunyoujun.cn" target="_blank" rel="noopener" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/zeqinjie" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:zhengzeqin@addcn.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://juejin.im/user/5b3c9c1ce51d45191716cb97" title="juejin" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-user-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a></div></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ios摘要"><span class="toc-number">1.</span> <span class="toc-text">ios摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#体系图"><span class="toc-number">2.</span> <span class="toc-text">体系图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直接进入正题如何统计到达"><span class="toc-number">3.</span> <span class="toc-text">直接进入正题如何统计到达</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在iOS10中新增两个拓展"><span class="toc-number">3.1.</span> <span class="toc-text">在iOS10中新增两个拓展</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://zhengzeqin.netlify.app/2018/07/04/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="zhengzeqin"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="zhengzeqin's blogs"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">iOS怎么推送统计到达率</h1><div class="post-meta"><div class="post-time" style="display:inline-block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2018-07-04 19:03:02" itemprop="dateCreated datePublished" datetime="2018-07-04T19:03:02+00:00">2018-07-04</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2020-08-25 02:27:27" itemprop="dateModified" datetime="2020-08-25T02:27:27+00:00">2020-08-25</time></div><div class="post-classify"><span class="post-category"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span> <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/iOS/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">iOS</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag" href="/tags/iOS/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">iOS</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h2 id="ios摘要"><a href="#ios摘要" class="headerlink" title="ios摘要"></a>ios摘要</h2><ul>
+<li><a href="http://www.cocoachina.com/ios/20170126/18618.html" target="_blank" rel="noopener">iOS10里的通知与推送</a></li>
+<li><a href="https://www.jianshu.com/p/ace1b422bad4" target="_blank" rel="noopener">国内 90%以上的 iOS 开发者，对 APNs 的认识都是错的</a><h2 id="体系图"><a href="#体系图" class="headerlink" title="体系图"></a>体系图</h2><img src="/images/2018/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/1.png" alt="" loading="lazy"></li>
+</ul>
+<h2 id="直接进入正题如何统计到达"><a href="#直接进入正题如何统计到达" class="headerlink" title="直接进入正题如何统计到达"></a>直接进入正题如何统计到达</h2><h3 id="在iOS10中新增两个拓展"><a href="#在iOS10中新增两个拓展" class="headerlink" title="在iOS10中新增两个拓展"></a>在iOS10中新增两个拓展</h3><ol>
+<li>其中的一个拓展UNNotificationServiceExtension 通知服务扩展</li>
+</ol>
+<ul>
+<li>UNNotificationServiceExtension 是修改远程推送携带的内容。</li>
+<li>UNNotificationServiceExtension 类 可以让开发者自定义推送展示的内容。你可以用 extension 修改推送内容和下载推送相关的资源。你可以在extension 中解密和加密的数据或下载推送相关的图片</li>
+</ul>
+<p>2.因此在这里可以提交到达的请求注意是这里处理时间只有30秒。为了不影响达到统计接口。一般会先发统计请求。同时通过缓存减少图片的请求。及图片的大小处理。</p>
+<pre><code class="objc">@interface NotificationService ()&lt;NSURLSessionDelegate&gt;
+
+@property (nonatomic, strong) void (^contentHandler)(UNNotificationContent *contentToDeliver);
+@property (nonatomic, strong) UNMutableNotificationContent *bestAttemptContent;
+
+@end
+
+@implementation NotificationService
+
+- (void)didReceiveNotificationRequest:(UNNotificationRequest *)request withContentHandler:(void (^)(UNNotificationContent * _Nonnull))contentHandler {
+
+    self.contentHandler = contentHandler;
+    self.bestAttemptContent = [request.content mutableCopy];
+    NSDictionary *userInfo = request.content.userInfo;
+
+    NSString *iconUrl = userInfo[[self fcmPushStrFromStr:@&quot;small_image&quot;]];//小图
+    NSString *imageUrl = userInfo[[self fcmPushStrFromStr:@&quot;image&quot;]];//大图
+
+    //重点这里发送给后端到达统计
+    [ProfessionTool sendFcmPushStatUserInfo:userInfo];//统计到达数
+
+    //这里是处理富文本图片 ，媒体视频等
+    UNNotificationAttachment *iconAtt = [self attachmentWithUrl:iconUrl fileName:@&quot;small_image&quot;];//待优化缓存方式
+    UNNotificationAttachment *imageAtt = [self attachmentWithUrl:imageUrl fileName:@&quot;image&quot;];
+    NSMutableArray *attArr = [NSMutableArray array];
+    if (iconAtt) [attArr addObject:iconAtt];
+    if (imageAtt) [attArr addObject:imageAtt];
+    self.bestAttemptContent.attachments = attArr;
+    self.contentHandler(self.bestAttemptContent);
+
+}
+
+- (UNNotificationAttachment *)attachmentWithUrl:(NSString *)url fileName:(NSString *)fileName{
+    if (url) {
+        UIImage *iconImg = [self getImageFromURL:url];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectoryPath = [paths firstObject];
+        NSString *iconPath = [self saveImage:iconImg withFileName:fileName ofType:@&quot;png&quot; inDirectory:documentsDirectoryPath];
+        if (iconPath &amp;&amp; ![iconPath isEqualToString:@&quot;&quot;]) {
+            UNNotificationAttachment * attachment = [UNNotificationAttachment attachmentWithIdentifier:fileName URL:[NSURL URLWithString:[@&quot;file://&quot; stringByAppendingString:iconPath]] options:nil error:nil];
+            if (attachment) {
+                return attachment;
+            }
+        }
+    }
+    return nil;
+}
+
+- (void)serviceExtensionTimeWillExpire {
+    // Called just before the extension will be terminated by the system.
+    // Use this as an opportunity to deliver your &quot;best attempt&quot; at modified content, otherwise the original push payload will be used.
+    self.contentHandler(self.bestAttemptContent);
+}
+
+#pragma mark - private Method
+- (UIImage *)getImageFromURL:(NSString *)fileURL {
+    DLog(@&quot;执行图片下载函数&quot;);
+    UIImage * result;
+    //dataWithContentsOfURL方法需要https连接
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    result = [UIImage imageWithData:data];
+
+    return result;
+}
+
+//将所下载的图片保存到本地
+- (NSString *)saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
+    NSString *urlStr = @&quot;&quot;;
+    if ([[extension lowercaseString] isEqualToString:@&quot;png&quot;]){
+        urlStr = [directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@&quot;%@.%@&quot;, imageName, @&quot;png&quot;]];
+        [UIImagePNGRepresentation(image) writeToFile:urlStr options:NSAtomicWrite error:nil];
+
+    } else if ([[extension lowercaseString] isEqualToString:@&quot;jpg&quot;] ||
+               [[extension lowercaseString] isEqualToString:@&quot;jpeg&quot;]){
+        urlStr = [directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@&quot;%@.%@&quot;, imageName, @&quot;jpg&quot;]];
+        [UIImageJPEGRepresentation(image, 1.0) writeToFile:urlStr options:NSAtomicWrite error:nil];
+
+    } else{
+        DLog(@&quot;extension error&quot;);
+    }
+    return urlStr;
+}
+
+//因项目中使用google 的FCM推送收到的推送字段有点不一样
+- (NSString *)fcmPushStrFromStr:(NSString *)str{
+    NSString *resultStr = str;
+    NSString *fcmPre = @&quot;gcm.notification.&quot;;
+    if (![resultStr containsString:fcmPre]) {
+        resultStr = [NSString stringWithFormat:@&quot;%@%@&quot;,fcmPre,resultStr];
+    }
+    return resultStr;
+}</code></pre>
+<p>3.服务端配置内容需要添加”mutable-content”:1 （富文本推送）<br>很多人会搞混”content-available”:1（静默推送）</p>
+<p>4.当然了google FCM的富文本推送是”mutable_content”:”true”<br>国内用的比较多的是激光JPush.百度推送等。后续会写篇google FCM 推送的配置方式</p>
+<hr>
+<pre><code>拿到的回调内容
+//iOS10 之前
+{
+&quot;aps&quot; : {
+    &quot;alert&quot; : &quot;title&quot;,
+    &quot;badge&quot; : 1,
+    &quot;sound&quot;:&quot;default&quot;
+        },
+}
+
+//iOS10 新增的文案多样性
+{
+&quot;aps&quot; : {
+    &quot;alert&quot; : { 
+         &quot;title&quot; : &quot;title&quot;, 
+         &quot;subtitle&quot; : &quot;subtitle&quot;,         
+         &quot;body&quot; : &quot;body&quot;
+                },
+    &quot;badge&quot; : 1,
+    &quot;sound&quot;:&quot;default&quot;
+        },
+}
+</code></pre><pre><code class="objc">//接收到推送回调函数
+//iOS1O之前的 
+
+//NS_AVAILABLE_IOS(3_0)
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    //最开始的接收推送回调
+}
+
+//NS_AVAILABLE_IOS(7_0)
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    //这里亦可接收静默推送回调   
+}
+
+//iOS10之后统一 
+//  iOS10特性。App在前台获取通知
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification*)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
+
+   completionHandler(UNNotificationPresentationOptionAlert);
+
+}
+
+//点击通知进入App
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+
+}
+</code></pre>
+<p>5.与之前不同是ios10前台运行也能收到推送通知栏同样在上面userNotificationCenter接收处理点击事件</p>
+<p>6.当然本人曾在低于iOS10版本通用过pod ‘JDStatusBarNotification’库模仿一个推送通知栏</p>
+<p>7.测试发送iOS10的富文本推送低于iOS10版本的的用户只能收到title. subtitle内容是获取不到的。</p>
+<p>8.Target的调试 将项目运行起来，然后发送一条推送之后，激活Service Extension，在XCode -DEBUG下Attach to Process 选择对于的target</p>
+</div><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">Thanks</div><div id="qr" style="display:none;"><div style="display:inline-block"></div><div style="display:inline-block"></div><div style="display:inline-block"></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>zhengzeqin</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://zhengzeqin.netlify.app/2018/07/04/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/" title="iOS怎么推送统计到达率">https://zhengzeqin.netlify.app/2018/07/04/iOS%E6%80%8E%E4%B9%88%E6%8E%A8%E9%80%81%E7%BB%9F%E8%AE%A1%E5%88%B0%E8%BE%BE%E7%8E%87/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2018/09/10/OC%E5%92%8CSwift%E6%B7%B7%E7%BC%96%E7%BB%8F%E9%AA%8C/" rel="prev" title="OC和Swift混编经验"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">OC和Swift混编经验</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2018/06/20/UIWebView-%E6%9B%BF%E6%8D%A2%E6%88%90-WKWebView-%E4%B8%8E-JS-%E4%BA%A4%E4%BA%92%E7%9A%84%E5%85%BC%E5%AE%B9/" rel="next" title="UIWebView 替换成 WKWebView 与 JS 交互的兼容"><span class="post-nav-text">UIWebView 替换成 WKWebView 与 JS 交互的兼容</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div id="comment"><div class="comment-tooltip text-center"><span>点击按钮跳转 GitHub Issues 评论。</span><br><span>若没有本文 Issue，您可以使用 Comment 模版新建。</span><br><a class="hty-button hty-button--raised" id="github-issues" href="https://github.com/zeqinjie/zeqinjie.github.io/issues?q=is:issue+iOS怎么推送统计到达率" target="_blank" rel="noopener">GitHub Issues</a></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2020 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> zhengzeqin</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v4.2.1</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v0.9.4</span></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></div><script defer src="/js/utils.js"></script><script defer src="/js/hexo-theme-yun.js"></script></body></html>
