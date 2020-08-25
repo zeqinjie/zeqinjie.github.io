@@ -1,0 +1,462 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="zhengzeqin"><meta name="copyright" content="zhengzeqin"><meta name="generator" content="Hexo 4.2.1"><meta name="theme" content="hexo-theme-yun"><title>初尝-Flutter-与-Native-混合开发-FlutterBoost-应用 | zhengzeqin's blogs</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="none" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.16/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_stqaphw3j4.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="shortcut icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/hexo-theme-yun.css"><link rel="alternate" href="/atom.xml" title="zhengzeqin's blogs"><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"root":"/","title":"Zeqin的小站","version":"0.9.4","anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><script>(function(){
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();</script><meta name="description" content="前言 在跨平台开发中 Flutter 优势很明了，简单总结 :   接近原生的性能   热重载   丰富的组件考虑项目有大量原生业务，我们也不可能基于 Flutter 重构所有的业务。因此只能在原有的基础上混合使用 Flutter 来开发新业务或重构旧业务。参考闲鱼，哈罗等，他们也提供相应的解决混合开发方案 flutter_boost 和 flutter_thrio。 目前我们采用 flutter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初尝-Flutter-与-Native-混合开发-FlutterBoost-应用">
+<meta property="og:url" content="https://zhengzeqin.netlify.app/2020/08/25/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="zhengzeqin&#39;s blogs">
+<meta property="og:description" content="前言 在跨平台开发中 Flutter 优势很明了，简单总结 :   接近原生的性能   热重载   丰富的组件考虑项目有大量原生业务，我们也不可能基于 Flutter 重构所有的业务。因此只能在原有的基础上混合使用 Flutter 来开发新业务或重构旧业务。参考闲鱼，哈罗等，他们也提供相应的解决混合开发方案 flutter_boost 和 flutter_thrio。 目前我们采用 flutter">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/1.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/2.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/3.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/4.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/5.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/6.png">
+<meta property="article:published_time" content="2020-08-25T02:36:34.364Z">
+<meta property="article:modified_time" content="2020-08-25T02:36:34.364Z">
+<meta property="article:author" content="zhengzeqin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhengzeqin.netlify.app/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/1.png"><link rel="alternate" href="/atom.xml" title="zhengzeqin's blogs" type="application/atom+xml">
+</head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script defer src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="zhengzeqin"><img width="96" loading="lazy" src="https://avatars0.githubusercontent.com/u/8444646?s=460&amp;u=92eeef27cb894c8d36a516501f39941ab89cd7d0&amp;v=4" alt="zhengzeqin"></a><div class="site-author-name"><a href="/about/">zhengzeqin</a></div><a class="site-name" href="/about/site.html">zhengzeqin's blogs</a><sub class="site-subtitle">Lightly do not say gives up, otherwise sorry oneself</sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">13</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">1</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">2</span></a></div><a class="site-state-item hty-icon-button" href="https://yun.yunyoujun.cn" target="_blank" rel="noopener" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/zeqinjie" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:zhengzeqin@addcn.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://juejin.im/user/5b3c9c1ce51d45191716cb97" title="juejin" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-user-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a></div></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flutter-混编现有项目"><span class="toc-number">2.</span> <span class="toc-text">Flutter 混编现有项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Native-部分"><span class="toc-number">3.</span> <span class="toc-text">Native 部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-TWFlutterUtil-部分"><span class="toc-number">3.1.</span> <span class="toc-text">示例 TWFlutterUtil 部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Native-打开-Flutter-页面"><span class="toc-number">3.2.</span> <span class="toc-text">Native 打开 Flutter 页面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flutter-部分"><span class="toc-number">4.</span> <span class="toc-text">Flutter 部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-TWFlutterBoostPage-部分"><span class="toc-number">4.1.</span> <span class="toc-text">示例 TWFlutterBoostPage 部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flutter-打开-Native-页面"><span class="toc-number">4.2.</span> <span class="toc-text">Flutter 打开 Native 页面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优秀的第三方库"><span class="toc-number">5.</span> <span class="toc-text">优秀的第三方库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目前项目结构"><span class="toc-number">6.</span> <span class="toc-text">目前项目结构</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://zhengzeqin.netlify.app/2020/08/25/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="zhengzeqin"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="zhengzeqin's blogs"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">初尝-Flutter-与-Native-混合开发-FlutterBoost-应用</h1><div class="post-meta"><div class="post-time" style="display:inline-block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2020-08-25 02:36:34" itemprop="dateCreated datePublished" datetime="2020-08-25T02:36:34+00:00">2020-08-25</time></div><div class="post-classify"></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>在跨平台开发中 <code>Flutter</code> 优势很明了，简单总结 : <br></p>
+<ol>
+<li>接近原生的性能  </li>
+<li>热重载  </li>
+<li>丰富的组件<br><br>考虑项目有大量原生业务，我们也不可能基于 Flutter 重构所有的业务。<br>因此只能在原有的基础上混合使用 Flutter 来开发新业务或重构旧业务。<br>参考闲鱼，哈罗等，他们也提供相应的解决混合开发方案 <a href="https://github.com/alibaba/flutter_boost" target="_blank" rel="noopener">flutter_boost</a> 和 <a href="https://github.com/hellobike/flutter_thrio" target="_blank" rel="noopener">flutter_thrio</a>。 <br>目前我们采用 flutter_boost 作为我们 tw591 项目的解决方案。</li>
+</ol>
+</blockquote>
+<h2 id="Flutter-混编现有项目"><a href="#Flutter-混编现有项目" class="headerlink" title="Flutter 混编现有项目"></a>Flutter 混编现有项目</h2><blockquote>
+<p>正式接入：</p>
+</blockquote>
+<ol>
+<li><p>创建 Flutter 项目<code>flutter create -t module flutter_module</code>, 建议创建完可以执行用 AndoirdStudio 编译执行，看是否正常,不过记得删除生成的ios 文件，否则会遇第4条说的flutter_export_environment 问题</p>
+</li>
+<li><p>将创建的 flutter_module 项目到自己目标仓库中</p>
+</li>
+<li><p>在 Podfile 文件添加如下脚本</p>
+</li>
+</ol>
+<pre><code>// 注意：这个指定路径即是你的 flutter_module 项目的目标路径
+flutter_application_path = &#39;../../TWFlutter591/flutter_module&#39;
+load File.join(flutter_application_path, &#39;.ios&#39;, &#39;Flutter&#39;, &#39;podhelper.rb&#39;)
+
+target &#39;twhouse&#39; do
+install_all_flutter_pods(flutter_application_path)
+end</code></pre><ol start="4">
+<li>注意项目报 flutter_export_environment.sh 文件路径错误<blockquote>
+<p>处理方式是删除flutter_module/ios 文件<br>用AndoirdStudio 或者 VSCode 运行一遍，产生新的 flutter_export_environment.sh 文件</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/1.png" alt="" loading="lazy"></p>
+<ol start="5">
+<li>集成闲鱼 flutter_boost 混合开发方案</li>
+</ol>
+<ul>
+<li>注意：flutter_boost 版本需要和我们 flutter 版本对应，例如：flutter_boost:v1.17.1-hotfixes 对应的flutter sdk：1.17.1 </li>
+<li>使用 Flutter –version 命令查看当前版本</li>
+<li>打开 flutter_module 文件夹 下pubspec.yaml 文件，添加依赖<pre><code>flutter_boost:
+  git:
+      url: &#39;https://github.com/alibaba/flutter_boost.git&#39;
+      ref: &#39;v1.17.1-hotfixes&#39;</code></pre></li>
+<li>执行命令 <code>flutter packages get</code></li>
+<li>最后在项目中执行 <code>pod install --repo-update</code></li>
+</ul>
+<p><img src="/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/2.png" alt="" loading="lazy"></p>
+<ul>
+<li>执行 install 后原生项目 Flutter 目录，会将我们 Flutter 项目打包成 framework</li>
+</ul>
+<p><img src="/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/3.png" alt="" loading="lazy"></p>
+<h2 id="Native-部分"><a href="#Native-部分" class="headerlink" title="Native 部分"></a>Native 部分</h2><p><img src="/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/4.png" alt="" loading="lazy"></p>
+<blockquote>
+<ul>
+<li>TWFlutterUtil 单例类用来注册 flutter 引擎，同时封装一层调用，避免 FlutterBoostPlugin 直接调用</li>
+<li>TWFlutterPlatformRouter 基于 Flutter_boost DEMO 提供的基础上，根据我们项目业务做了调整，主要是 flutter 与 Native 平台交互的 Router</li>
+<li>TWFlutterJumpUtil 主要是处理 Flutter 与 Native 相互路由跳转间的业务逻辑</li>
+<li>TWFlutterNativePageName 定义页面路由名称</li>
+<li>TWFlutterNativeEventUtil 主要是处理 Flutter 与 Native 事件的业务逻辑</li>
+</ul>
+</blockquote>
+<h3 id="示例-TWFlutterUtil-部分"><a href="#示例-TWFlutterUtil-部分" class="headerlink" title="示例 TWFlutterUtil 部分"></a>示例 TWFlutterUtil 部分</h3><blockquote>
+<p><code>TWFlutterUtil.swift</code>    </p>
+</blockquote>
+<pre><code class="swift">import UIKit
+import flutter_boost
+@objcMembers class TWFlutterUtil: NSObject {
+
+    static let shareInstance = TWFlutterUtil()
+    var router: TWFlutterPlatformRouter?
+    var engine: FlutterEngine?
+
+    /// 注册 flutter 引擎
+    func registerFlutter() {
+        router = TWFlutterPlatformRouter()
+        guard let router = router else {return}
+        FlutterBoostPlugin.sharedInstance().startFlutter(with: router) {[weak self](engine) in
+            self?.engine = engine
+            HouseTool.dispatch(afterTime: 2.0) {
+                TWFlutterNativeEventUtil.sendConfigureInfo()
+            }
+        }
+    }
+
+    // MARK: - sendEvent
+
+    /**
+     * Native层往Dart层发送事件，事件名称通过eventName指定
+     *
+     * @param eventName 事件名称
+     * @param arguments 参数
+     */
+    open class func sendEvent(_ eventName: String, arguments: [AnyHashable: Any]) {
+        FlutterBoostPlugin.sharedInstance().sendEvent(eventName, arguments: arguments)
+    }
+
+    /**
+    * 添加监听Dart层调用Native层的事件
+    *
+    * @param name 事件名称
+    * @param listner 事件监听器
+    */
+    open class func addEventListener(_ listener: @escaping FLBEventListener, name: String) -&gt; FLBVoidCallback {
+        return FlutterBoostPlugin.sharedInstance().addEventListener(listener, forName: name)
+    }
+
+    // MARK: - open/close Page
+
+    /**
+     * 关闭页面，混合栈推荐使用的用于操作页面的接口
+     *
+     * @param uniqueId 关闭的页面唯一ID符
+     * @param resultData 页面要返回的结果（给上一个页面），会作为页面返回函数的回调参数
+     * @param exts 额外参数
+     * @param completion 注意必传 关闭页面的即时回调，页面一旦关闭即回调
+     */
+    open class func close(_ uniqueId: String, result resultData: [AnyHashable: Any], exts: [AnyHashable: Any], completion: @escaping (Bool) -&gt; Void) {
+        FlutterBoostPlugin.close(uniqueId, result: resultData, exts: exts, completion: completion)
+    }
+
+    /**
+     * 打开新页面（默认以push方式），混合栈推荐使用的用于操作页面的接口；通过urlParams可以设置为以present方式打开页面：urlParams:@{@&quot;present&quot;:@(YES)}
+     *
+     * @param url 打开的页面资源定位符
+     * @param urlParams 传入页面的参数; 若有特殊逻辑，可以通过这个参数设置回调的id
+     * @param exts 额外参数
+     * @param resultCallback 当页面结束返回时执行的回调，通过这个回调可以取得页面的返回数据，如close函数传入的resultData
+     * @param completion 注意必传 打开页面的即时回调，页面一旦打开即回调
+     */
+    open class func open(_ url: String, urlParams: [AnyHashable: Any], exts: [AnyHashable: Any], onPageFinished resultCallback: @escaping ([AnyHashable: Any]) -&gt; Void, completion: @escaping (Bool) -&gt; Void) {
+        FlutterBoostPlugin.open(url, urlParams: urlParams, exts: exts, onPageFinished: resultCallback, completion: completion)
+    }
+
+    /**
+     * Present方式打开新页面，混合栈推荐使用的用于操作页面的接口
+     *
+     * @param url 打开的页面资源定位符
+     * @param urlParams 传入页面的参数; 若有特殊逻辑，可以通过这个参数设置回调的id
+     * @param exts 额外参数
+     * @param resultCallback 当页面结束返回时执行的回调，通过这个回调可以取得页面的返回数据，如close函数传入的resultData
+     * @param completion 注意必传 打开页面的即时回调，页面一旦打开即回调
+     */
+    open class func present(_ url: String, urlParams: [AnyHashable: Any], exts: [AnyHashable: Any], onPageFinished resultCallback: @escaping ([AnyHashable: Any]) -&gt; Void, completion: @escaping (Bool) -&gt; Void) {
+        FlutterBoostPlugin.present(url, urlParams: urlParams, exts: exts, onPageFinished: resultCallback, completion: completion)
+    }
+
+}</code></pre>
+<h3 id="Native-打开-Flutter-页面"><a href="#Native-打开-Flutter-页面" class="headerlink" title="Native 打开 Flutter 页面"></a>Native 打开 Flutter 页面</h3><blockquote>
+<p>页面采用文件 <code>page</code> <code>页面类名</code>，作为注册 id</p>
+</blockquote>
+<pre><code class="swift">//在 iOS 中 TWFlutterUtil 打开更多页面
+TWFlutterUtil.open(&quot;TWMorePage&quot;,
+                           urlParams: [&quot;isDebug&quot;:API_DEBUG == 1 ? &quot;1&quot; : &quot;0&quot;],
+                           exts: [&quot;isHideNavigationBar&quot;:&quot;1&quot;],
+                           onPageFinished: { (result) in
+        }) { (finish) in
+        }
+</code></pre>
+<h2 id="Flutter-部分"><a href="#Flutter-部分" class="headerlink" title="Flutter 部分"></a>Flutter 部分</h2><p><img src="/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/5.png" alt="" loading="lazy"></p>
+<blockquote>
+<ul>
+<li>TWFlutterBoostPage 主要是 flutter 项目的入口页面</li>
+<li>TWRouterBoost 用于注册原生调用 flutter 的路由</li>
+<li>TWFlutterNativeEvent 用于 flutter 与 native 的事件处理</li>
+<li>TWRouterFlutterNative 路由跳转业务逻辑处理</li>
+</ul>
+</blockquote>
+<h3 id="示例-TWFlutterBoostPage-部分"><a href="#示例-TWFlutterBoostPage-部分" class="headerlink" title="示例 TWFlutterBoostPage 部分"></a>示例 TWFlutterBoostPage 部分</h3><blockquote>
+<p><code>TWFlutterBoostPage</code></p>
+</blockquote>
+<pre><code class="dart">import &#39;package:flutter/material.dart&#39;;
+import &#39;package:flutter_boost/flutter_boost.dart&#39;;
+import &#39;package:flutter_module/common/tw_app_color.dart&#39;;
+import &#39;package:flutter_module/router/tw_router_boost.dart&#39;;
+
+class TWFlutterBoostPage extends StatefulWidget {
+  @override
+  _TWFlutterBoostAppState createState() =&gt; _TWFlutterBoostAppState();
+}
+
+class _TWFlutterBoostAppState extends State&lt;TWFlutterBoostApp&gt; {
+  @override
+  void initState() {
+    super.initState();
+    //初始化注册...
+    TWRouterBoost routerBoost  = TWRouterBoost();
+    routerBoost.registerRouter();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: &#39;Flutter Boost example&#39;,
+        //（2）初始化路由
+        debugShowCheckedModeBanner: true,
+        theme: ThemeData(
+          primaryColor: TWAppColor.tw_ff7f00,
+          dividerColor: TWAppColor.tw_eeeeee,
+        ),
+        builder: FlutterBoost.init(postPush: _onRoutePushed),
+        home: Container(
+            color:Colors.white
+        ));
+  }
+
+  void _onRoutePushed(
+      String pageName,
+      String uniqueId,
+      Map&lt;String, dynamic&gt; params,
+      Route&lt;dynamic&gt; route,
+      Future&lt;dynamic&gt; _,
+      ) {
+
+  }
+}</code></pre>
+<blockquote>
+<p><code>TWRouterFlutterNative</code></p>
+</blockquote>
+<pre><code class="dart">import &#39;package:flutter_boost/flutter_boost.dart&#39;;
+import &#39;package:flutter_module/features/mine/more/tw_more_page.dart&#39;;
+
+class TWRouterFlutterNative {
+
+  ///************** Flutter to Naitive *******************/
+  static const String tw_flutterOpenNative = &#39;TWFlutterOpenNative&#39;;
+
+  ///************** Naitive to Flutter *******************/
+  static const String tw_flutterMorePage = &quot;TWMorePage&quot;;
+
+  /// 路由跳转逻辑处理 map
+  static Map&lt;String, PageBuilder&gt; routerPageBuilder = &lt;String, PageBuilder&gt;{
+    tw_flutterMorePage: (String pageName, Map&lt;String, dynamic&gt; params, String _) =&gt; TWMorePage(params: params,),
+  };
+}</code></pre>
+<blockquote>
+<p><code>TWRouterBoost</code></p>
+</blockquote>
+<pre><code class="dart">import &#39;package:flutter/material.dart&#39;;
+import &#39;package:flutter_boost/flutter_boost.dart&#39;;
+import &#39;package:flutter_module/router/tw_router_flutter_native.dart&#39;;
+import &#39;package:flutter_module/util/tw_log.dart&#39;;
+
+class TWRouterBoost extends NavigatorObserver{
+
+  // 初始化注册路由...
+  void registerRouter() {
+    FlutterBoost.singleton.registerPageBuilders(TWRouterFlutterNative.routerPageBuilder);
+    FlutterBoost.singleton.addBoostNavigatorObserver(this);
+  }
+
+  ///************** NavigatorObserver Method *******************/
+  void didPush(Route&lt;dynamic&gt; route, Route&lt;dynamic&gt; previousRoute) {
+    TWLog(&quot;flutterboost#didPush&quot;);
+  }
+
+  void didPop(Route&lt;dynamic&gt; route, Route&lt;dynamic&gt; previousRoute) {
+    TWLog(&quot;flutterboost#didPop&quot;);
+  }
+
+  void didRemove(Route&lt;dynamic&gt; route, Route&lt;dynamic&gt; previousRoute) {
+    TWLog(&quot;flutterboost#didRemove&quot;);
+  }
+
+  void didReplace({Route&lt;dynamic&gt; newRoute, Route&lt;dynamic&gt; oldRoute}) {
+    TWLog(&quot;flutterboost#didReplace&quot;);
+  }
+}</code></pre>
+<blockquote>
+<p>TWFlutterNativeEvent</p>
+</blockquote>
+<pre><code class="dart">import &#39;package:flutter_boost/flutter_boost.dart&#39;;
+import &#39;package:flutter_module/config/tw_configure.dart&#39;;
+import &#39;package:flutter_module/util/tw_log.dart&#39;;
+
+class TWFlutterNativeEvent {
+
+  ///************** Native 发送给 Flutter 事件名称 *******************/
+  static final String tw_flutterNativeEventConfigureInfo = &quot;EventConfigureInfo&quot;;
+
+  ///************** Flutter 发送给 Native 事件名称 *******************/
+
+  ///************** Native 发送给 Flutter 事件统一处理 *******************/
+
+  /// 监听启动配置信息
+  static void addConfigureInfo() {
+    TWLog(&quot;开始配置启动信息...&quot;);
+    FlutterBoost.singleton.channel.addEventListener(TWFlutterNativeEvent.tw_flutterNativeEventConfigureInfo,
+            (name, arguments) {
+          TWConfigure.singleton.configure(arguments);
+          return;
+        });
+  }
+}</code></pre>
+<h3 id="Flutter-打开-Native-页面"><a href="#Flutter-打开-Native-页面" class="headerlink" title="Flutter 打开 Native 页面"></a>Flutter 打开 Native 页面</h3><blockquote>
+<p>采用项目路由方式打开<br>注意：<code>TWFlutterOpenNative</code> 标识 ID ，即是标记从 Flutter 页面打开 Native 页面 ，打开 Native 页面路由 exts 字段<br>路由部分，建议是原来项目有的，统一Android 和 iOS 的路由规则标准，我们 iOS 采用 MGJRouter , Android 采用 ARouter。定义一套项目的路由 URL 标准</p>
+</blockquote>
+<pre><code class="dart">  ///************** Private Method *******************/
+  void clickAction(int index) {
+    TWLog(&quot;點擊 index = $index&quot;);
+    /// 打开评价，
+    String open_page_url = &quot;app:///xxxx/more_page?entrance=more_evalue&amp;pushAnimation=1&quot;;
+    /// 闲鱼库打开 原生api
+    FlutterBoost.singleton.open(TWRouterFlutterNative.tw_flutterOpenNative, exts: {
+      &quot;app_open_url&quot;: app_open_url
+    }).then((value) =&gt; print(&#39;call me when page is finished. did recieve native route result $value&#39;));
+ }</code></pre>
+<blockquote>
+<p>用 flutter 重构更多页面, 体验感觉和原生差不多</p>
+</blockquote>
+<p><img src="/images/2020/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/6.png" alt="" loading="lazy"></p>
+<h2 id="优秀的第三方库"><a href="#优秀的第三方库" class="headerlink" title="优秀的第三方库"></a>优秀的第三方库</h2><blockquote>
+<p>为了减少与原生桥接，尽量让 Android 和 iOS 能公用一套，那么接下来要做的是一些基础设施建设了。包括 网络库，状态管理，图片缓存，数据缓存等…</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>地址</th>
+<th>star</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>网络库</td>
+<td><a href="https://github.com/flutterchina/dio" target="_blank" rel="noopener">Dio</a></td>
+<td>8.2k</td>
+</tr>
+<tr>
+<td>状态管理</td>
+<td><a href="https://github.com/felangel/bloc" target="_blank" rel="noopener">bloc</a></td>
+<td>5.3k</td>
+</tr>
+<tr>
+<td>状态管理</td>
+<td><a href="https://github.com/rrousselGit/provider" target="_blank" rel="noopener">provider</a></td>
+<td>2.8k</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td><a href="https://github.com/tekartik/sqflite" target="_blank" rel="noopener">sqflite</a></td>
+<td>1.8k</td>
+</tr>
+<tr>
+<td>图片缓存库</td>
+<td><a href="https://github.com/Baseflow/flutter_cached_network_image" target="_blank" rel="noopener">flutter_cached_network_image</a></td>
+<td>1.4k</td>
+</tr>
+<tr>
+<td>刷新控件</td>
+<td><a href="https://github.com/xuelongqy/flutter_easyrefresh" target="_blank" rel="noopener">flutter_easyrefresh</a></td>
+<td>2.2k</td>
+</tr>
+<tr>
+<td>刷新控件</td>
+<td><a href="https://github.com/peng8350/flutter_pulltorefresh" target="_blank" rel="noopener">flutter_pulltorefresh</a></td>
+<td>1.6k</td>
+</tr>
+<tr>
+<td>轮播</td>
+<td><a href="https://github.com/best-flutter/flutter_swiper" target="_blank" rel="noopener">flutter_swiper</a></td>
+<td>2.6k</td>
+</tr>
+<tr>
+<td>本地通知</td>
+<td><a href="https://github.com/MaikuB/flutter_local_notifications" target="_blank" rel="noopener">flutter_local_notifications</a></td>
+<td>1.1k</td>
+</tr>
+<tr>
+<td>Widgets</td>
+<td><a href="https://github.com/flutterchina/flukit" target="_blank" rel="noopener">flukit</a></td>
+<td>2.6k</td>
+</tr>
+<tr>
+<td>Toast</td>
+<td><a href="https://github.com/OpenFlutter/flutter_oktoast" target="_blank" rel="noopener">flutter_oktoast</a></td>
+<td>288</td>
+</tr>
+<tr>
+<td>Toast</td>
+<td><a href="https://github.com/ponnamkarthik/FlutterToast" target="_blank" rel="noopener">FlutterToast</a></td>
+<td>818</td>
+</tr>
+<tr>
+<td>菜单</td>
+<td><a href="https://github.com/letsar/flutter_slidable" target="_blank" rel="noopener">flutter_slidable</a></td>
+<td>1.4k</td>
+</tr>
+<tr>
+<td>地图</td>
+<td><a href="https://github.com/best-flutter/flutter_amap" target="_blank" rel="noopener">flutter_amap</a></td>
+<td>137</td>
+</tr>
+<tr>
+<td>地图</td>
+<td><a href="https://github.com/best-flutter/flutter_amap_location" target="_blank" rel="noopener">flutter_amap_location</a></td>
+<td>249</td>
+</tr>
+<tr>
+<td>调试工具</td>
+<td><a href="https://github.com/learn-flutter-dev/flutter_flipperkit" target="_blank" rel="noopener">flutter_slidable</a></td>
+<td>308</td>
+</tr>
+</tbody></table>
+<h2 id="目前项目结构"><a href="#目前项目结构" class="headerlink" title="目前项目结构"></a>目前项目结构</h2><pre><code>flutter_module
+├──images #图片资源
+├──asset  #本地资源
+├──lib   #项目代码
+    ├── features    # 业务模块
+    |   ├── home    # 首页    
+    |   ├── search  # 搜寻    
+    |   ├── news     # 新闻    
+    |   └── mine     # 我的
+    |       └──more # 更多 (例：更多页面)
+    |           ├── model     # 模型
+    |           ├── view     # 视图
+    |           ├── tool     # 工具    
+    |           └── page     # 页面      
+    |       
+    ├── page        # 入口主页面
+    ├── common      # 通用组件,头文件,定义常量 (例：颜色常量)
+    ├── util        # 工具类,http工具,公共方法   
+    ├── widgets     # 各种封装的可复用组件  
+    ├── store       # 数据相关 缓存库等
+    ├── blocs       # 状态管理相关    
+    ├── config      # 配置中心 (例：主题颜色，debug 线上切换方法等)
+    └── router      # 路由
+         └──  页面映射配置、observe 方法导出</code></pre></div><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">Thanks</div><div id="qr" style="display:none;"><div style="display:inline-block"></div><div style="display:inline-block"></div><div style="display:inline-block"></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>zhengzeqin</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://zhengzeqin.netlify.app/2020/08/25/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/" title="初尝-Flutter-与-Native-混合开发-FlutterBoost-应用">https://zhengzeqin.netlify.app/2020/08/25/%E5%88%9D%E5%B0%9D-Flutter-%E4%B8%8E-Native-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91-FlutterBoost-%E5%BA%94%E7%94%A8/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/2020/07/01/iOS%E5%BC%80%E5%8F%91%E8%80%81%E5%8F%B8%E6%9C%BA%E7%9A%84%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8-%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" rel="next" title="iOS开发老司机的神兵利器-效率工具"><span class="post-nav-text">iOS开发老司机的神兵利器-效率工具</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div id="comment"><div class="comment-tooltip text-center"><span>点击按钮跳转 GitHub Issues 评论。</span><br><span>若没有本文 Issue，您可以使用 Comment 模版新建。</span><br><a class="hty-button hty-button--raised" id="github-issues" href="https://github.com/zeqinjie/zeqinjie.github.io/issues?q=is:issue+初尝-Flutter-与-Native-混合开发-FlutterBoost-应用" target="_blank" rel="noopener">GitHub Issues</a></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2020 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> zhengzeqin</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v4.2.1</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v0.9.4</span></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></div><script defer src="/js/utils.js"></script><script defer src="/js/hexo-theme-yun.js"></script></body></html>
