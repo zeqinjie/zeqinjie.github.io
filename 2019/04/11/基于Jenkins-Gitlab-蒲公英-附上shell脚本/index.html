@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="zhengzeqin"><meta name="copyright" content="zhengzeqin"><meta name="generator" content="Hexo 4.2.1"><meta name="theme" content="hexo-theme-yun"><title>基于Jenkins-Gitlab-蒲公英-附上shell脚本 | zhengzeqin's blogs</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="none" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.16/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_stqaphw3j4.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="shortcut icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/hexo-theme-yun.css"><link rel="alternate" href="/atom.xml" title="zhengzeqin's blogs"><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"root":"/","title":"Zeqin的小站","version":"0.9.4","anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><script>(function(){
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();</script><meta name="description" content="Jenkins 持续集成自动化打包分发 基于Jenkins + Gitlab + 蒲公英  部署流程安装Jenkins 安装Java环境，目前jenkins只支持jdk8 下载地址  安装完使用命令 java -version检查当前版本 java选择如图       安装 Jenkins   先确保已安装Homebrew   命令安装 brew install jenkins  设置开机自启动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Jenkins-Gitlab-蒲公英-附上shell脚本">
+<meta property="og:url" content="https://zhengzeqin.netlify.app/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/index.html">
+<meta property="og:site_name" content="zhengzeqin&#39;s blogs">
+<meta property="og:description" content="Jenkins 持续集成自动化打包分发 基于Jenkins + Gitlab + 蒲公英  部署流程安装Jenkins 安装Java环境，目前jenkins只支持jdk8 下载地址  安装完使用命令 java -version检查当前版本 java选择如图       安装 Jenkins   先确保已安装Homebrew   命令安装 brew install jenkins  设置开机自启动">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/1.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/2.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/3.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/4.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/5.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/6.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/7.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/8.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/9.png">
+<meta property="article:published_time" content="2019-04-11T19:03:00.000Z">
+<meta property="article:modified_time" content="2020-10-14T10:41:48.641Z">
+<meta property="article:author" content="zhengzeqin">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhengzeqin.netlify.app/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/1.png"><link rel="alternate" href="/atom.xml" title="zhengzeqin's blogs" type="application/atom+xml">
+</head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script defer src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="zhengzeqin"><img width="96" loading="lazy" src="https://avatars0.githubusercontent.com/u/8444646?s=460&amp;u=92eeef27cb894c8d36a516501f39941ab89cd7d0&amp;v=4" alt="zhengzeqin"></a><div class="site-author-name"><a href="/about/">zhengzeqin</a></div><a class="site-name" href="/about/site.html">zhengzeqin's blogs</a><sub class="site-subtitle">Lightly do not say gives up, otherwise sorry oneself</sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">15</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">1</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">4</span></a></div><a class="site-state-item hty-icon-button" href="https://yun.yunyoujun.cn" target="_blank" rel="noopener" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/zeqinjie" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:zhengzeqin@addcn.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://juejin.im/user/5b3c9c1ce51d45191716cb97" title="juejin" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-user-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a></div></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Jenkins-持续集成"><span class="toc-number">1.</span> <span class="toc-text">Jenkins 持续集成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#自动化打包分发"><span class="toc-number">1.1.</span> <span class="toc-text">自动化打包分发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#部署流程"><span class="toc-number">1.1.1.</span> <span class="toc-text">部署流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装Jenkins"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">安装Jenkins</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置shell脚本"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">配置shell脚本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置Jenkins"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">配置Jenkins</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Jenkins配置结果"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">Jenkins配置结果</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#项目任务建立-（本地dev-远程dev-远程master）"><span class="toc-number">1.1.1.4.1.</span> <span class="toc-text">项目任务建立 （本地dev 远程dev 远程master）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#执行构建"><span class="toc-number">1.1.1.4.2.</span> <span class="toc-text">执行构建</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#执行历史"><span class="toc-number">1.1.1.4.3.</span> <span class="toc-text">执行历史</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#蒲公英平台"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">蒲公英平台</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#局域网ip-端口访问失败"><span class="toc-number">1.2.</span> <span class="toc-text">局域网ip + 端口访问失败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打包失败"><span class="toc-number">1.3.</span> <span class="toc-text">打包失败</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://zhengzeqin.netlify.app/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="zhengzeqin"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="zhengzeqin's blogs"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">基于Jenkins-Gitlab-蒲公英-附上shell脚本</h1><div class="post-meta"><div class="post-time" style="display:inline-block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2019-04-11 19:03:00" itemprop="dateCreated datePublished" datetime="2019-04-11T19:03:00+00:00">2019-04-11</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2020-10-14 10:41:48" itemprop="dateModified" datetime="2020-10-14T10:41:48+00:00">2020-10-14</time></div><div class="post-classify"><span class="post-category"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span> <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/iOS/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">iOS</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag" href="/tags/iOS/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">iOS</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h1 id="Jenkins-持续集成"><a href="#Jenkins-持续集成" class="headerlink" title="Jenkins 持续集成"></a>Jenkins 持续集成</h1><h2 id="自动化打包分发"><a href="#自动化打包分发" class="headerlink" title="自动化打包分发"></a>自动化打包分发</h2><blockquote>
+<p>基于Jenkins + Gitlab + 蒲公英</p>
+</blockquote>
+<h3 id="部署流程"><a href="#部署流程" class="headerlink" title="部署流程"></a>部署流程</h3><h4 id="安装Jenkins"><a href="#安装Jenkins" class="headerlink" title="安装Jenkins"></a>安装Jenkins</h4><ol>
+<li>安装Java环境，目前jenkins只支持jdk8 <a href="https://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">下载地址</a><blockquote>
+<ol>
+<li>安装完使用命令 java -version检查当前版本</li>
+<li>java选择如图</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<p><img src="/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/1.png" alt="" loading="lazy"></p>
+<ol start="2">
+<li>安装 Jenkins</li>
+</ol>
+<ul>
+<li><p>先确保已安装<a href="https://brew.sh/index_zh-cn" target="_blank" rel="noopener">Homebrew</a> </p>
+</li>
+<li><p>命令安装 brew install jenkins</p>
+</li>
+<li><p>设置开机自启动</p>
+<ul>
+<li><p>创建一个链接到开机启动文件夹里</p>
+<pre><code>ln -sfv /usr/local/opt/jenkins/*.plist ~/Library/LaunchAgents</code></pre></li>
+<li><p>手动启动jenkins </p>
+<pre><code>launchctl load ~/Library/LaunchAgents/homebrew.mxcl.jenkins.plist</code></pre></li>
+<li><p>手动关闭jenkins</p>
+<pre><code>launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.jenkins.plist</code></pre></li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>启动 Jenkins<blockquote>
+<p>浏览器打开连接</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a></li>
+</ul>
+<ol start="4">
+<li>按照提示，找到/Users/wsh/.jenkins/secrets/initialAdminPassword 这个目录下的initialAdminPassword文件</li>
+<li>Install suggested plugins 安装推荐插件</li>
+<li>安装GitLab Plugin 和 Gitlab Hook Plugin</li>
+</ol>
+<h4 id="配置shell脚本"><a href="#配置shell脚本" class="headerlink" title="配置shell脚本"></a>配置shell脚本</h4><blockquote>
+<p>注意 将shell脚本保存到工程目录下  保存为 zzq.sh</p>
+</blockquote>
+<pre><code>SECONDS=0
+
+#默认使用的语言是英文
+export LANG=zh_CN.UTF-8
+export LC_ALL=zh_CN.UTF-8
+
+#假设脚本放置在与项目相同的路径下
+project_dir=$(pwd)
+
+#编辑上传的文件全部放于此路径下,不影响原工程 ，保存项目目录地址
+upload_dir=&quot;/Users/addcn/Documents/591TestAndUpload&quot;
+
+if [ -d &quot;$upload_dir&quot; ]; then
+    echo &quot;编辑上传的文件输出文件目录存在,目录为:$upload_dir&quot; 
+else 
+    echo &quot;编辑上传的文件目录不存在&quot; 
+    mkdir -pv $upload_dir
+    echo &quot;创建打包文件目录${upload_dir}成功&quot;
+fi
+
+
+#打包配置环境
+configuration=&quot;Release&quot;
+
+#判断是用的xcodeproj还是直接xcworkspace，xcworkspace设置为true，否则设置为false
+isWorkSpace=true
+
+#项目名称
+scheme=`find . -name *.xcodeproj | awk -F &quot;[/.]&quot; &#39;{print $(NF-1)}&#39;`
+
+projectName=&quot;${scheme}.xcworkspace&quot;
+
+#确定工程名称，如果用了cocopods，则使用xcworkspace，但是没有该文件则使用xcodeproj进行
+
+if [ -a &quot;$project_dir/$projectName&quot; ]; then
+    isWorkSpace=true
+    projectName=&quot;${scheme}.xcworkspace&quot;
+else
+    isWorkSpace=false
+    projectName=&quot;${scheme}.xcodeproj&quot;
+fi
+
+#指定项目地址
+project_path=&quot;$project_dir/$projectName&quot;
+
+#确认输出日期
+buildDate=$(date +%Y%m%d%H%M%S)
+
+#指定输出路径
+output_path=&quot;$upload_dir/package$buildDate&quot;
+
+#指定输出归档文件地址
+archive_path=&quot;$output_path/${scheme}.xcarchive&quot;
+
+#指定输出ipa名称
+ipa_name=&quot;${scheme}.ipa&quot;
+
+#指定输出ipa地址
+ipa_path=&quot;$output_path/$ipa_name&quot;
+
+#指定xarchive文件导出授权样式 bundle id
+provisioningProfileName=&quot;XC iOS: com.xxxx.xxxxxxx&quot;
+
+#指定打包所使用的输出方式，目前支持app-store, package, ad-hoc, enterprise, development, 和developer-id，即xcodebuild的method参数
+export_method=&#39;ad-hoc&#39;
+
+###############获取版本号,bundleID
+infoPlist=&quot;$project_dir/$scheme-Info.plist&quot;
+bundleVersion=`/usr/libexec/PlistBuddy -c &quot;Print CFBundleShortVersionString&quot; $infoPlist`
+bundleIdentifier=`/usr/libexec/PlistBuddy -c &quot;Print CFBundleIdentifier&quot; $infoPlist`
+bundleBuildVersion=`/usr/libexec/PlistBuddy -c &quot;Print CFBundleVersion&quot; $infoPlist`
+displayname=`/usr/libexec/PlistBuddy -c &quot;Print CFBundleDisplayName&quot; $infoPlist`
+
+#输出设定的变量值
+echo  &quot;项目名:$projectName&quot;
+
+echo &quot;===项目路径: ${project_path}===&quot;
+
+echo &quot;===打包xarchive文件路径: ${archive_path}===&quot;
+
+echo &quot;===打包ipa文件路径: ${ipa_path}===&quot;
+
+echo &quot;~~~~~~~~~~~~~~~~~~~开始编译~~~~~~~~~~~~~~~~~~~&quot;
+
+#处理没有输出打包文件目录的情况
+if [ -d &quot;$output_path&quot; ]; then
+    echo &quot;打包文件输出文件目录存在,目录为:$output_path&quot; 
+else 
+    echo &quot;打包文件目录不存在&quot; 
+    mkdir -pv $output_path
+    echo &quot;创建打包文件目录${output_path}成功&quot;
+fi
+
+#处理编译文件目录的情况
+cd $upload_dir
+rm -rf ./build
+buildAppToDir=&quot;$upload_dir/build&quot; #编译打包完成后.app文件存放的目录
+
+#重新进入当前项目路径下
+cd $project_dir
+
+security unlock-keychain -p &quot;addcn&quot; /Users/addcn/Library/Keychains/login.keychain
+
+#开始编译app
+if $isWorkSpace ; then  #判断编译方式
+    echo  &quot;开始编译workspace....&quot; 
+    xcodebuild  -workspace $projectName -scheme $scheme  -configuration $configuration clean build SYMROOT=$buildAppToDir
+else
+    echo  &quot;开始编译target....&quot;
+    xcodebuild  -target  $projectName  -configuration $configuration clean build SYMROOT=$buildAppToDir
+fi
+
+#判断编译结果
+if test $? -eq 0
+then
+echo &quot;~~~~~~~~~~~~~~~~~~~编译成功~~~~~~~~~~~~~~~~~~~&quot;
+else
+echo &quot;~~~~~~~~~~~~~~~~~~~编译失败~~~~~~~~~~~~~~~~~~~&quot;
+exit 1
+fi
+
+echo &quot;开始打包$scheme.app成$scheme.ipa.....&quot;
+cd $upload_dir
+findFolderName=`find . -name &quot;$configuration-*&quot; -type d |xargs basename` #查找目录
+appDir=$buildAppToDir/$findFolderName  #app所在路径
+
+#重新进入当前项目路径下
+cd $project_dir
+
+echo &quot;打包xarchive文件,路径为:$archive_path&quot;
+if $isWorkSpace ; then  #判断编译方式
+    echo  &quot;开始打包workspace....&quot; 
+    xcodebuild -workspace $projectName -scheme $scheme -destination generic/platform=iOS archive -configuration ${configuration} ONLY_ACTIVE_ARCH=NO -archivePath $archive_path
+else
+    echo  &quot;开始打包target....&quot;
+    xcodebuild -target $projectName -scheme $scheme -destination generic/platform=iOS archive -configuration ${configuration} ONLY_ACTIVE_ARCH=NO -archivePath $archive_path
+fi
+
+#检查文件是否存在
+if [ -a &quot;$archive_path&quot; ]; then
+echo &quot;打包$scheme.xcarchive成功.&quot;
+else
+echo &quot;打包$scheme.xcarchive失败.&quot;
+exit 1
+fi
+
+# echo &quot;开始导出$scheme.xcarchive成$scheme.ipa.....&quot;
+# xcodebuild -exportArchive -exportFormat ipa -archivePath $archive_path -exportPath $appDir/$ipa_name -exportProvisioningProfile $provisioningProfileName
+
+echo &quot;开始打包$scheme.app成$scheme.ipa.....&quot;
+xcrun -sdk iphoneos PackageApplication -v $appDir/$scheme.app -o $appDir/$ipa_name #将app打包成ipa
+
+echo &quot;检查打包文件$appDir/${ipa_name}是否存在&quot;
+if [ -f &quot;$appDir/$ipa_name&quot; ];then
+echo &quot;打包${ipa_name}成功.&quot;
+else
+echo &quot;打包${ipa_name}失败.&quot;
+exit 1
+fi
+
+cp -f -p $appDir/$ipa_name $ipa_path   #拷贝ipa文件
+echo &quot;复制${ipa_name}到${ipa_path}成功&quot;
+
+
+echo &quot;~~~~~~~~~~~~~~~~~~~结束打包，处理成功~~~~~~~~~~~~~~~~~~~&quot;
+#输出总用时
+echo &quot;===Finished.编译加打包共花费时间: ${SECONDS}s===&quot;
+
+
+echo &quot;正在上传至蒲公英平台&quot;
+
+echo &quot;版本:${bundleVersion}&quot;
+
+#蒲公英的ukey apikey
+curl -F &quot;file=@${ipa_path}&quot; -F &quot;uKey=xxxxxxxxxxxxx&quot; -F &quot;_api_key=xxxxxxxxxxxxxxx&quot; https://www.pgyer.com/apiv1/app/upload &gt; $output_path/code.text
+
+result=`cat $output_path/code.text`
+
+result1=`echo &quot;${result##*&quot;appQRCodeURL&quot;}&quot;`
+
+length=`expr ${#result1} - 6`
+
+result2=`echo ${result1:3:$length}`
+
+result3=`echo $result2 | sed &#39;s:\\\/:\/:g&#39;`
+
+if [ ! $result3 ];
+then
+   echo &quot;~~~~~~~~~~~~~~~~~~~上传失败~~~~~~~~~~~~~~~~~~~&quot;
+else
+   echo &quot;~~~~~~~~~~~~~~~~~~~上传成功~~~~~~~~~~~~~~~~~~~&quot;
+   echo &quot;生成的二维码链接为:${result3}&quot;
+fi
+
+# echo &quot;删除编译文件包和打包&quot;
+# rm -rf $buildAppToDir
+# rm -rf $output_path
+
+#输出总用时
+echo &quot;===Finished.共花费时间: ${SECONDS}s===&quot;
+</code></pre><h4 id="配置Jenkins"><a href="#配置Jenkins" class="headerlink" title="配置Jenkins"></a>配置Jenkins</h4><ol>
+<li>构建任务<ol>
+<li>选择新建任务</li>
+<li>如建远程develop。保存名称为remove_develop 项目</li>
+</ol>
+</li>
+</ol>
+<p><img src="/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/2.png" alt="" loading="lazy"></p>
+<ol start="2">
+<li>配置任务-源码管理</li>
+</ol>
+<p><img src="/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/3.png" alt="" loading="lazy"></p>
+<ol start="3">
+<li>配置任务 - 定时触发器配置(可选)<a href="https://www.jianshu.com/p/509c59391b3b" target="_blank" rel="noopener">参考</a></li>
+</ol>
+<p><img src="/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/4.png" alt="" loading="lazy"></p>
+<ol start="4">
+<li>配置任务 - 构建执行shell脚本命令</li>
+</ol>
+<p><img src="/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/5.png" alt="" loading="lazy"></p>
+<h4 id="Jenkins配置结果"><a href="#Jenkins配置结果" class="headerlink" title="Jenkins配置结果"></a>Jenkins配置结果</h4><h5 id="项目任务建立-（本地dev-远程dev-远程master）"><a href="#项目任务建立-（本地dev-远程dev-远程master）" class="headerlink" title="项目任务建立 （本地dev 远程dev 远程master）"></a>项目任务建立 （本地dev 远程dev 远程master）</h5><p><img src="/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/6.png" alt="" loading="lazy"></p>
+<h5 id="执行构建"><a href="#执行构建" class="headerlink" title="执行构建"></a>执行构建</h5><p><img src="/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/7.png" alt="" loading="lazy"></p>
+<h5 id="执行历史"><a href="#执行历史" class="headerlink" title="执行历史"></a>执行历史</h5><p><img src="/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/8.png" alt="" loading="lazy"></p>
+<h4 id="蒲公英平台"><a href="#蒲公英平台" class="headerlink" title="蒲公英平台"></a>蒲公英平台</h4><p><img src="/images/2019/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/9.png" alt="" loading="lazy"></p>
+<h2 id="局域网ip-端口访问失败"><a href="#局域网ip-端口访问失败" class="headerlink" title="局域网ip + 端口访问失败"></a>局域网ip + 端口访问失败</h2><blockquote>
+<p>修改 </p>
+</blockquote>
+<ul>
+<li>homebrew.mxcl.jenkins.plist 的 httpListenAddress 为 0.0.0.0<blockquote>
+<p>目录地址</p>
+</blockquote>
+</li>
+<li>~/Library/LaunchAgents/homebrew.mxcl.jenkins.plist<blockquote>
+<p>重启</p>
+</blockquote>
+</li>
+<li>brew services stop jenkins</li>
+<li>brew services start jenkins</li>
+</ul>
+<h2 id="打包失败"><a href="#打包失败" class="headerlink" title="打包失败"></a>打包失败</h2><blockquote>
+<p>如报异常:<br>xcrun: error: unable to find utility “PackageApplication”, not a developer tool or in PATH<br>则根据如下链接操作:</p>
+<ol>
+<li>Xcode脚本自动化打包问题：xcrun: error: unable to find utility “PackageApplication”, not a developer tool or in PATH</li>
+<li>后面根据对比发现新版的Xcode少了这个PackageApplication（转注：PackageApplication在前几个版本已被标识为废弃，在8.3版本彻底移除了）<br>先去找个旧版的Xcode里面copy一份过来</li>
+<li>放到下面这个目录：<br>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/</li>
+<li>然后执行命令：</li>
+</ol>
+<ul>
+<li>sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/</li>
+<li>chmod +x /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/PackageApplication</li>
+</ul>
+</blockquote>
+<ul>
+<li>附上PackageApplication下载地址：</li>
+<li><a href="https://pan.baidu.com/s/1jHJF2Lo" target="_blank" rel="noopener">https://pan.baidu.com/s/1jHJF2Lo</a></li>
+<li><a href="https://www.cnblogs.com/Crazy-ZY/p/7115076.html" target="_blank" rel="noopener">参考链接</a></li>
+</ul>
+</div><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">Thanks</div><div id="qr" style="display:none;"><div style="display:inline-block"></div><div style="display:inline-block"></div><div style="display:inline-block"></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>zhengzeqin</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://zhengzeqin.netlify.app/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/" title="基于Jenkins-Gitlab-蒲公英-附上shell脚本">https://zhengzeqin.netlify.app/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2019/08/23/MVVM%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8A%BF%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" rel="prev" title="MVVM架构优势及应用场景"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">MVVM架构优势及应用场景</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2018/12/06/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="Firebase的使用集合（二）"><span class="post-nav-text">Firebase的使用集合（二）</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div id="comment"><div class="comment-tooltip text-center"><span>点击按钮跳转 GitHub Issues 评论。</span><br><span>若没有本文 Issue，您可以使用 Comment 模版新建。</span><br><a class="hty-button hty-button--raised" id="github-issues" href="https://github.com/zeqinjie/zeqinjie.github.io/issues?q=is:issue+基于Jenkins-Gitlab-蒲公英-附上shell脚本" target="_blank" rel="noopener">GitHub Issues</a></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2020 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> zhengzeqin</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v4.2.1</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v0.9.4</span></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></div><script defer src="/js/utils.js"></script><script defer src="/js/hexo-theme-yun.js"></script></body></html>
