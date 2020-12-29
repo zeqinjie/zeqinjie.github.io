@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="zhengzeqin"><meta name="copyright" content="zhengzeqin"><meta name="generator" content="Hexo 4.2.1"><meta name="theme" content="hexo-theme-yun"><title>Firebase的使用集合（二） | zhengzeqin's blogs</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="none" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.16/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_stqaphw3j4.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="shortcut icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/hexo-theme-yun.css"><link rel="alternate" href="/atom.xml" title="zhengzeqin's blogs"><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"root":"/","title":"Zeqin的小站","version":"0.9.4","anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><script>(function(){
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();</script><meta name="description" content="远程配置简介 Firebase 远程配置是一项云端服务，可让您更改应用的行为和外观，而无需用户下载应用更新。使用远程配置时，您可以创建应用内默认值，用于控制应用的行为和外观。之后，您便可以使用 Firebase 控制台或 Remote Config REST API，使得应用的所有用户或细分用户群获得不同于默认值的行为和外观。您的应用可控制何时安装更新，并能经常检查有无更新并安装更新，且对性能的影">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Firebase的使用集合（二）">
+<meta property="og:url" content="https://zhengzeqin.netlify.app/2018/12/06/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="zhengzeqin&#39;s blogs">
+<meta property="og:description" content="远程配置简介 Firebase 远程配置是一项云端服务，可让您更改应用的行为和外观，而无需用户下载应用更新。使用远程配置时，您可以创建应用内默认值，用于控制应用的行为和外观。之后，您便可以使用 Firebase 控制台或 Remote Config REST API，使得应用的所有用户或细分用户群获得不同于默认值的行为和外观。您的应用可控制何时安装更新，并能经常检查有无更新并安装更新，且对性能的影">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/1.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/2.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/3.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/4.png">
+<meta property="og:image" content="https://zhengzeqin.netlify.app/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/5.png">
+<meta property="article:published_time" content="2018-12-06T19:03:02.000Z">
+<meta property="article:modified_time" content="2020-12-29T09:10:38.613Z">
+<meta property="article:author" content="zhengzeqin">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhengzeqin.netlify.app/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/1.png"><link rel="alternate" href="/atom.xml" title="zhengzeqin's blogs" type="application/atom+xml">
+</head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script defer src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="zhengzeqin"><img width="96" loading="lazy" src="https://avatars0.githubusercontent.com/u/8444646?s=460&amp;u=92eeef27cb894c8d36a516501f39941ab89cd7d0&amp;v=4" alt="zhengzeqin"></a><div class="site-author-name"><a href="/about/">zhengzeqin</a></div><a class="site-name" href="/about/site.html">zhengzeqin's blogs</a><sub class="site-subtitle">Lightly do not say gives up, otherwise sorry oneself</sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">16</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">1</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">4</span></a></div><a class="site-state-item hty-icon-button" href="https://yun.yunyoujun.cn" target="_blank" rel="noopener" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/zeqinjie" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:zhengzeqin@addcn.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://juejin.im/user/5b3c9c1ce51d45191716cb97" title="juejin" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-user-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a></div></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程配置"><span class="toc-number">1.</span> <span class="toc-text">远程配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要功能"><span class="toc-number">1.2.</span> <span class="toc-text">主要功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过程"><span class="toc-number">1.3.</span> <span class="toc-text">过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建参数及条件"><span class="toc-number">1.3.1.</span> <span class="toc-text">创建参数及条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#app获取远程配置好的数据"><span class="toc-number">1.3.2.</span> <span class="toc-text">app获取远程配置好的数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意："><span class="toc-number">1.3.3.</span> <span class="toc-text">注意：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-B-Test"><span class="toc-number">2.</span> <span class="toc-text">A&#x2F;B Test</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介-1"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#支持两种测试方式"><span class="toc-number">2.2.</span> <span class="toc-text">支持两种测试方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要功能-1"><span class="toc-number">2.3.</span> <span class="toc-text">主要功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过程-1"><span class="toc-number">2.4.</span> <span class="toc-text">过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建A-B-TEST实验"><span class="toc-number">2.4.1.</span> <span class="toc-text">创建A&#x2F;B TEST实验</span></a></li></ol></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://zhengzeqin.netlify.app/2018/12/06/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="zhengzeqin"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="zhengzeqin's blogs"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Firebase的使用集合（二）</h1><div class="post-meta"><div class="post-time" style="display:inline-block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2018-12-06 19:03:02" itemprop="dateCreated datePublished" datetime="2018-12-06T19:03:02+00:00">2018-12-06</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2020-12-29 09:10:38" itemprop="dateModified" datetime="2020-12-29T09:10:38+00:00">2020-12-29</time></div><div class="post-classify"><span class="post-category"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span> <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/iOS/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">iOS</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag" href="/tags/iOS/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">iOS</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h2 id="远程配置"><a href="#远程配置" class="headerlink" title="远程配置"></a><a href="https://firebase.google.com/docs/remote-config/" target="_blank" rel="noopener">远程配置</a></h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
+<p>Firebase 远程配置是一项云端服务，可让您更改应用的行为和外观，而无需用户下载应用更新。使用远程配置时，您可以创建应用内默认值，用于控制应用的行为和外观。之后，您便可以使用 Firebase 控制台或 Remote Config REST API，使得应用的所有用户或细分用户群获得不同于默认值的行为和外观。您的应用可控制何时安装更新，并能经常检查有无更新并安装更新，且对性能的影响微乎其微。<a href="https://juejin.im/post/5c08df4c6fb9a04a0c2e3e07" target="_blank" rel="noopener">掘金地址</a></p>
+</blockquote>
+<h3 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h3><ul>
+<li>将更改快速发布至应用的用户群<ul>
+<li>您可以通过更改服务端参数值来更改应用的默认行为和外观。</li>
+<li>例如，您可以更改应用的布局或颜色主题背景以配合季节性促销，而无需发布应用更新。</li>
+</ul>
+</li>
+<li>针对细分用户群量身打造应用<ul>
+<li>您可以使用远程配置为不同的细分用户群（按应用版本、按 Google Analytics for Firebase 受众群体、按语言及更多因素划分）提供多样化的应用用户体验。</li>
+</ul>
+</li>
+<li>运行 A/B 测试以改进您的应用<ul>
+<li>您可以结合使用远程配置随机百分位定位和 Google Analytics for Firebase，在不同的细分用户群中针对应用的改进之处进行 A/B 测试，以便能够先验证这些改进之处，然后再将其推向整个用户群。</li>
+</ul>
+</li>
+</ul>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><pre><code>//通过Cocopod导入
+pod &#39;Firebase/RemoteConfig&#39;，</code></pre><blockquote>
+<p>与performance一样，默认会在[FIRApp configure]; 初始化 <br></p>
+</blockquote>
+<p>&lt;!–&gt; -FIRAnalyticsDebugDisabled–&gt;</p>
+<!---FIRAnalyticsDebugEnabled-->
+
+<p><img src="/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/1.png" alt="" loading="lazy"></p>
+<blockquote>
+<p>Firebase   DebugView调试部分 <br><br>[√] FIRAnalyticsDebugDisabled : 调试关闭<br><br>[√] FIRAnalyticsDebugEnabled : 调试打开<br></p>
+</blockquote>
+<h4 id="创建参数及条件"><a href="#创建参数及条件" class="headerlink" title="创建参数及条件"></a>创建参数及条件</h4><p><img src="/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/2.png" alt="" loading="lazy"></p>
+<p>Parameters ：参数列表</p>
+<ul>
+<li>设定参数的指定条件</li>
+<li>限制最多2000个参数</li>
+</ul>
+<p>Conditions ：条件列表</p>
+<ul>
+<li>Remote Config 提供多种条件选项，比如操作系统,语言，国家地区，目标对象…</li>
+<li>限制最多 500个条件</li>
+</ul>
+<p>Parameters和Conditions的限制</p>
+<ul>
+<li>参数键最多可包含 256 个字符，且必须以下划线或英文字母（A-Z、a-z）开头，还可以包含数字。一个项目中所有参数值字符串的总长度不能超过 80 万个字符</li>
+</ul>
+<blockquote>
+<p><a href="https://firebase.google.com/docs/remote-config/parameters" target="_blank" rel="noopener">我们配置app_color这个参数，支持json字符串</a><br><br> [[FIRRemoteConfig remoteConfig]configValueForKey:@”app_color”]</p>
+</blockquote>
+<h4 id="app获取远程配置好的数据"><a href="#app获取远程配置好的数据" class="headerlink" title="app获取远程配置好的数据"></a>app获取远程配置好的数据</h4><pre><code>- (void)firebaseRemoteConfigure{
+    //过期时间。默认设置为60分钟
+    NSTimeInterval duration = 3600;
+#if DEBUG
+    //配置设置，是否打开调试模式
+    FIRRemoteConfigSettings *setting = [[FIRRemoteConfigSettings alloc]initWithDeveloperModeEnabled:YES];
+    [FIRRemoteConfig remoteConfig].configSettings = setting;
+    //这边测试调试，所以设置为0分钟
+    duration = 0;
+#endif
+    // 设置60分钟触发更新  3600
+    [[FIRRemoteConfig remoteConfig] fetchWithExpirationDuration:duration completionHandler:^(FIRRemoteConfigFetchStatus status, NSError * _Nullable error) {
+        if(!error){
+            DLog(@&quot;FIRRemoteConfigstatus = %d&quot;,status);
+            BOOL activateFetched = [[FIRRemoteConfig remoteConfig]activateFetched];
+            if (activateFetched) {
+            //获取服务端的值
+                FIRRemoteConfigValue *value = [[FIRRemoteConfig remoteConfig] configValueForKey:@&quot;app_color&quot;];
+                DLog(@&quot;FIRRemoteConfigvalue = %@, %@&quot;,value.dataValue,value.stringValue);
+            }
+        }
+    }];
+}</code></pre><h4 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h4><ul>
+<li>fetchWithExpirationDuration:completionHandler: 使用 (默认情况下，缓存在 12 小时后失效)<br><br>需限制是在 60 分钟的时间段内最多可以提取 5次。否则如果您的应用多次使用 fetchWithExpirationDuration:completionHandler: 请求刷新值，请求会遭到阻止，并向您的应用提供缓存的值。 <a href="https://firebase.google.com/docs/remote-config/ios?authuser=0#caching_and_throttling" target="_blank" rel="noopener">参考</a></li>
+<li>使用远程配置模板时，请注意以下要求：这些模板有不同的版本，每个版本的有效期均为 90 天（从创建之日起到将其替换为更新版本为止），而存储的版本总数不超过 300 个</li>
+</ul>
+<h2 id="A-B-Test"><a href="#A-B-Test" class="headerlink" title="A/B Test"></a><a href="https://firebase.google.com/docs/ab-testing/" target="_blank" rel="noopener">A/B Test</a></h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><blockquote>
+<p>Firebase A/B 测试可让您轻松地运行、分析和扩展产品和营销实验，从而帮助您改进应用。它使您能够测试应用界面、功能或互动广告系列的更改，以确认这些更改是否确实使关键指标（如收入和用户留存率）较更改前有所改观。</p>
+</blockquote>
+<h3 id="支持两种测试方式"><a href="#支持两种测试方式" class="headerlink" title="支持两种测试方式"></a>支持两种测试方式</h3><ul>
+<li><a href="https://firebase.google.com/docs/ab-testing/abtest-config?authuser=0" target="_blank" rel="noopener">创建远程配置实验</a></li>
+<li><a href="https://firebase.google.com/docs/ab-testing/abtest-with-console?authuser=0" target="_blank" rel="noopener">创建消息传递实验</a></li>
+</ul>
+<h3 id="主要功能-1"><a href="#主要功能-1" class="headerlink" title="主要功能"></a>主要功能</h3><ul>
+<li>运行测试并提升您的产品使用体验<ul>
+<li>通过远程配置创建实验，在实验的变体中更改应用的行为和外观，并测试哪种产品使用体验能最有效地带来您最关注的效果。</li>
+</ul>
+</li>
+<li>使用通知编辑器寻找再次吸引用户的方法<ul>
+<li>使用 A/B 测试帮助您找出最有效的措辞和消息设置来吸引用户使用您的应用。</li>
+</ul>
+</li>
+<li>安全推出新功能<ul>
+<li>要推出新功能，首先必须在一小部分用户身上进行测试，确保其符合您的目标。等到对 A/B 测试结果有了信心后，再面向全部用户推出功能。</li>
+</ul>
+</li>
+<li>定位“预测”的用户群<ul>
+<li>借助 Firebase 预测功能，您可以针对预计会执行特定操作的用户运行 A/B 测试，这类操作包括花钱消费（或不花钱）、停止使用您的应用，以及执行您通过 Analytics 定义的任何其他转化事件等。</li>
+</ul>
+</li>
+</ul>
+<h3 id="过程-1"><a href="#过程-1" class="headerlink" title="过程"></a>过程</h3><pre><code>//通过Cocopod导入
+pod &#39;FirebaseABTesting&#39;</code></pre><blockquote>
+<p>默认会在[FIRApp configure]; 初始化 <br><br>通过远程配置方式获取参数数据代码参考RemoteConfig部分</p>
+</blockquote>
+<h4 id="创建A-B-TEST实验"><a href="#创建A-B-TEST实验" class="headerlink" title="创建A/B TEST实验"></a>创建A/B TEST实验</h4><blockquote>
+<p>创建remote_a/b_test实例</p>
+</blockquote>
+<p><img src="/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/3.png" alt="" loading="lazy"></p>
+<blockquote>
+<p>创建测试条件及参数</p>
+</blockquote>
+<ul>
+<li>控制组，Variant A  两组数据</li>
+</ul>
+<p><img src="/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/4.png" alt="" loading="lazy"></p>
+<blockquote>
+<p>测试配置执行的ID凭证</p>
+</blockquote>
+<ul>
+<li>ID凭证即是fcmToken</li>
+</ul>
+<p><img src="/images/2018/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/5.png" alt="" loading="lazy"></p>
+<blockquote>
+<p>通过远程配置的方式获取到参数条件</p>
+</blockquote>
+<ul>
+<li>参考Remote Configure 远程配置方式</li>
+</ul>
+</div><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">Thanks</div><div id="qr" style="display:none;"><div style="display:inline-block"></div><div style="display:inline-block"></div><div style="display:inline-block"></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>zhengzeqin</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://zhengzeqin.netlify.app/2018/12/06/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Firebase的使用集合（二）">https://zhengzeqin.netlify.app/2018/12/06/Firebase%E7%9A%84%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%EF%BC%88%E4%BA%8C%EF%BC%89/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2019/04/11/%E5%9F%BA%E4%BA%8EJenkins-Gitlab-%E8%92%B2%E5%85%AC%E8%8B%B1-%E9%99%84%E4%B8%8Ashell%E8%84%9A%E6%9C%AC/" rel="prev" title="基于Jenkins-Gitlab-蒲公英-附上shell脚本"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">基于Jenkins-Gitlab-蒲公英-附上shell脚本</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2018/11/22/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%80%A7%E8%83%BD%E6%A0%87%E5%87%86%E5%80%BC%E5%8F%8A%E5%AE%9A%E4%B9%89%E6%95%B4%E7%90%86/" rel="next" title="移动端性能标准值及定义整理"><span class="post-nav-text">移动端性能标准值及定义整理</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div id="comment"><div class="comment-tooltip text-center"><span>点击按钮跳转 GitHub Issues 评论。</span><br><span>若没有本文 Issue，您可以使用 Comment 模版新建。</span><br><a class="hty-button hty-button--raised" id="github-issues" href="https://github.com/zeqinjie/zeqinjie.github.io/issues?q=is:issue+Firebase的使用集合（二）" target="_blank" rel="noopener">GitHub Issues</a></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2020 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> zhengzeqin</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v4.2.1</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v0.9.4</span></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></div><script defer src="/js/utils.js"></script><script defer src="/js/hexo-theme-yun.js"></script></body></html>
